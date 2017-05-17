@@ -1,0 +1,66 @@
+extends layout
+block headExtra
+  link(href='/css/schedule.css', rel='stylesheet')
+block content
+  .container-fluid
+    // Page Heading
+    .row
+      .col-lg-12
+        h1.page-header
+          | 시간표
+          small Schedule
+    .row
+      .col-lg-10.col-lg-offset-1
+        div
+          table#timetable.table.table-bordered.text-center
+            tr
+              // (colspan=2)
+              th.times.text-center 
+                | 시간
+              th.text-center
+                | 월
+              th.text-center
+                | 화
+              th.text-center
+                | 수
+              th.text-center
+                | 목
+              th.text-center
+                | 금
+              th.text-center
+                | 토
+            - var count = params.schedules.length;
+            - var rowsCnt = [0,0,0,0,0,0,0];
+            - var courses = [];
+            - for (var i=0; i<32; i++)
+              - var h  = 8+parseInt(i/2)
+              - var startTime = '' + parseInt(h/10)+h%10 + ':' + (i%2)*3 + '0'
+              //- - var endTime = '' + parseInt((h+i%2)/10)+(h+i%2)%10 + ':' + ((i+1)%2)*3 + '0'
+              tr
+                td.time.startTime
+                  | #{startTime}
+                //- td.time.endTime.vBottom
+                //-   | #{endTime}
+                - for (var j=1; j<7; j++)
+                  - var isSchedule = false;
+                  if rowsCnt[j] > 0
+                    - rowsCnt[j] -= 1
+                    - isSchedule = true
+                  else
+                    each schedule in params.schedules
+                      if count > 0 && startTime == schedule.start_time.substring(0,5) && j == schedule.weekday
+                        - var colorIdx = courses.indexOf(schedule.cou_num)
+                        - var duringTime = schedule.during_time
+                        - duringTime = parseInt((parseInt(duringTime.substring(0,2))*60 + parseInt(duringTime.substring(3,5)))/30)+1
+                        - count--
+                        - isSchedule = true
+                        - rowsCnt[j] = duringTime-1
+                        if colorIdx == -1
+                          - courses.push(schedule.cou_num)
+                          - colorIdx = courses.length-1
+                        td(rowspan=duringTime class="isData vMiddle color"+colorIdx courseNum=schedule.cou_num)
+                          | #{schedule.cou_name}
+                  if !isSchedule
+                    td
+                      
+    .row

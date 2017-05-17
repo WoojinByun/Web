@@ -1,24 +1,18 @@
-/*!
- * Start Bootstrap - SB Admin (http://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
-
-/* Global Styles */
 
 body {
     margin-top: 100px;
-    background-color: #222;
+    background-color: #fff;
 }
 
 @media(min-width:768px) {
     body {
-        margin-top: 50px;
+        margin-top: 60px;
     }
 }
 
 #wrapper {
     padding-left: 0;
+    margin: 0 auto;
 }
 
 #page-wrapper {
@@ -27,19 +21,19 @@ body {
     background-color: #fff;
 }
 
-.huge {
-    font-size: 50px;
-    line-height: normal;
-}
-
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 225px;
+      width:1280px;
     }
 
     #page-wrapper {
         padding: 10px;
     }
+}
+
+.huge {
+    font-size: 50px;
+    line-height: normal;
 }
 
 /* Top Navigation */
@@ -56,7 +50,7 @@ body {
 .top-nav>li>a {
     padding-top: 15px;
     padding-bottom: 15px;
-    line-height: 20px;
+    line-height: 30px;
     color: #999;
 }
 
@@ -225,7 +219,18 @@ ul.alert-dropdown {
 .panel-yellow > a:hover {
     color: #df8a13;
 }
-table.att th, 
+.vTop{
+  vertical-align: top !important;
+}
+.vMiddle{
+  vertical-align: middle !important;
+}
+.vBottom{
+  vertical-align: bottom !important;
+}
+
+
+table.att th,
 table.att td{
 	text-align: center;
 	height:46px;
@@ -236,3 +241,15 @@ tr.attendData td{
 td.success{background-color:#dff0d8;}
 td.late{background-color:#faf2cc;}
 td.absence{background-color:#ebcccc;}
+.navbar-header a{
+  font-size: 18px;
+  height: 60px;
+  padding: 20px 15px;
+}
+.navbar-inner-wrapper{
+  width: 1280px;
+  margin: 0 auto;
+}
+.top-nav>li>a{
+  font-size: 18px;
+}

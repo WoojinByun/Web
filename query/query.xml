@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<query>
+  <doLogin>
+    SELECT usr_num, name FROM USER WHERE id = '%s' AND pw = '%s'
+  </doLogin>
+  <getCourse>
+    SELECT COU.cou_num, COU.cou_name, PRO.name pro_name
+    FROM USER PRO, COURSE COU, STUDY STD
+    WHERE STD.stu_num = %s
+    AND STD.cou_num = COU.cou_num
+    AND COU.pro_num = PRO.usr_num
+  </getCourse>
+  <getSchedule>
+    SELECT COU.cou_num, COUT.weekday, PRO.name, COU.cou_name, COUT.place, COUT.start_time, COUT.during_time
+    FROM STUDY STU, COURSE_TIME COUT, COURSE COU, USER PRO
+    WHERE STU.stu_num = %s
+    AND COUT.cou_num = COU.cou_num
+    and COU.pro_num = PRO.usr_num
+    AND STU.cou_num = COUT.cou_num
+  </getSchedule>
+</query>
