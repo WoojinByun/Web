@@ -28,16 +28,16 @@ html(lang='en')
                 ul.dropdown-menu.message-dropdown
                   each course in params.courses
                     li.message-preview
-                      a(href='/attend/#{course.cou_num}')
+                      a(href='/attend/#{course.couNum}')
                         .media
                           span.pull-left
                             img.media-object(src='http://placehold.it/50x50', alt='')
                           .media-body
                             h5.media-heading
-                              strong #{course.cou_name}
+                              strong #{course.couName}
                             p.small.text-muted
                               i.fa.fa-clock-o
-                              |  #{course.pro_name}
+                              |  #{course.proName}
                             p Lorem ipsum dolor sit amet, consectetur...
               li
                 a(href='/schedule')

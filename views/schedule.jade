@@ -48,18 +48,18 @@ block content
                     - isSchedule = true
                   else
                     each schedule in params.schedules
-                      if count > 0 && startTime == schedule.start_time.substring(0,5) && j == schedule.weekday
-                        - var colorIdx = courses.indexOf(schedule.cou_num)
-                        - var duringTime = schedule.during_time
+                      if count > 0 && startTime == schedule.startTime.substring(0,5) && j == schedule.weekday
+                        - var colorIdx = courses.indexOf(schedule.couNum)
+                        - var duringTime = schedule.duringTime
                         - duringTime = parseInt((parseInt(duringTime.substring(0,2))*60 + parseInt(duringTime.substring(3,5)))/30)+1
                         - count--
                         - isSchedule = true
                         - rowsCnt[j] = duringTime-1
                         if colorIdx == -1
-                          - courses.push(schedule.cou_num)
+                          - courses.push(schedule.couNum)
                           - colorIdx = courses.length-1
-                        td(rowspan=duringTime class="isData vMiddle color"+colorIdx courseNum=schedule.cou_num)
-                          | #{schedule.cou_name}
+                        td(rowspan=duringTime class="isData vMiddle color"+colorIdx courseNum=schedule.couNum)
+                          | #{schedule.couName}
                   if !isSchedule
                     td
                       

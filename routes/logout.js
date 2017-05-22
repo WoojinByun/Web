@@ -4,10 +4,7 @@ var dbmodules = require('../util/dbmodule.js');
 var sessioning = require('../util/sessioning');
 
 router.use(function(req, res, next){
-  if(sessioning.getSession(req))
-    next();
-  else
-    res.redirect('/');
+  errCtl(res, next, !sessioning.getSession(req), '/', '');
 });
 router.use(sessioning.doLogout);
 

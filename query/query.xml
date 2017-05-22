@@ -18,4 +18,12 @@
     and COU.pro_num = PRO.usr_num
     AND STU.cou_num = COUT.cou_num
   </getSchedule>
+  <getStuAttend>
+    SELECT COU.cou_name, ATT.stu_num, date(ATT.time) date, sum(ATT.attend_state) att_cnt
+    FROM ATTEND ATT, COURSE COU
+    WHERE ATT.stu_num = %s
+    AND ATT.cou_num = %s
+    AND COU.cou_num = ATT.cou_num
+    GROUP by ATT.cou_num, ATT.stu_num, date(ATT.time)
+  </getStuAttend>
 </query>

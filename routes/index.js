@@ -1,19 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var sessioning = require('../util/sessioning');
-var dbmodule = require('../util/dbmodule.js');
+var dbmodule = require('../util/dbmodule');
+var errorControl = require('../util/errorControl');
+var errCtl = errorControl.errCtl;
 var user = {};
 var params = {};
 
 router.use(function(req, res, next){
+  params = {}
   params.user = sessioning.getSession(req);
-  if(params.user)
-    next();
-  else
-    res.redirect('/login');
+  errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
 router.get('/', function(req, res, next) {
-  var courseEvt = dbmodule.getCourse(params.user.usr_num);
+  var courseEvt = dbmodule.getCourse(params.user.usrNum);
   courseEvt.on('end', function(error, courses){
     if (error) {
       res.writeHead(500);

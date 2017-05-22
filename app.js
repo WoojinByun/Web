@@ -9,10 +9,12 @@ var session = require('express-session');
 var index = require('./routes/index');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
+var attend = require('./routes/attend');
 var schedule = require('./routes/schedule');
 var register = require('./routes/user/register');
 
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,6 +40,7 @@ app.use(session({
 
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/attend', attend);
 app.use('/schedule', schedule);
 app.use('/register', register);
 app.use('/', index);

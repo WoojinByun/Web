@@ -6,14 +6,11 @@ var formidable = require('formidable');
 var sessioning = require('../../util/sessioning');
 var dbmodule = require('../../util/dbmodule.js');
 var params = {};
-
-
+``
 router.use(function(req, res, next){
+  params = {}
   params.user = sessioning.getSession(req);
-  if(params.user)
-    next();
-  else
-    res.redirect('/login');
+  errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
 
 router.post('/upload', function(req, res, next) {
@@ -28,7 +25,7 @@ router.post('/upload', function(req, res, next) {
       var tempPath = this.openedFiles[i].path;
       var fileName = this.openedFiles[i].name;
       var index = fileName.indexOf('/');
-      var newLocation = 'images/' + params.user.usr_num + '/';
+      var newLocation = 'images/' + params.user.usrNum + '/';
       console.log(tempPath);
       console.log(__dirname + '/' + newLocation + fileName);
       fs.copy(tempPath, newLocation+fileName, function(err) {
@@ -43,7 +40,7 @@ router.post('/upload', function(req, res, next) {
 
 });
 router.get('/', function(req, res, next) {
-  var courseEvt = dbmodule.getCourse(params.user.usr_num);
+  var courseEvt = dbmodule.getCourse(params.user.usrNum);
   courseEvt.on('end', function(error, courses){
     if (error) {
       res.writeHead(500);
@@ -67,7 +64,7 @@ function getDescriptor(fullFilePath, fileName){
   shell.cd('../face_recognition/src/build/');
   console.log('-----------> ' + './extract_vector ' + fullFilePath);
   shell.exec('./extract_vector ' + fullFilePath);
-  shell.cd('../../../Web/images/' + params.user.usr_num);
+  shell.cd('../../../Web/images/' + params.user.usrNum);
   var str = shell.cat(fileName.replace('.jpg','') + '*.txt');
   var discs = str.stdout.split("\n");
   discs.forEach(function(disc){

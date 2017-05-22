@@ -1,0 +1,47 @@
+extends layout
+block content
+  .container-fluid
+    // Page Heading
+    .row
+      .col-lg-12
+        h1.page-header
+          | 출석 정보 확인
+    // /.row
+    .row
+      .col-lg-12
+        h2
+          - var attMax = params.attends.length;
+          - var count = 0;
+          | #{params.attends[0].couName}
+          small  출석률 #{parseInt(count)}%
+        .table-responsive
+          table.table.table-hover.table-striped.att
+            - for (var i=0; i<attMax/16; i++)
+              tr.gray
+                th 회차
+                - for (var j=i*16; j<attMax && j<16+i*16; j++)
+                  th
+                    | #{j+1}
+              tr.gray
+                th 날짜
+                - for (var j=i*16; j<attMax && j<16+i*16; j++)
+                  - var dd = params.attends[j].date.getDate();
+                  - var mm = params.attends[j].date.getMonth()+1; 
+                  - if(dd<10) dd='0'+dd;
+                  - if(mm<10) mm='0'+mm;
+                  th
+                    | #{mm + '/' + dd}
+              tr.attendData
+                td
+                - for (var j=i*16; j<attMax && j<16+i*16; j++)
+                  - var isAttend = params.attends[j].attCnt >= 5;
+                  if isAttend
+                    - count++;
+                    td.success
+                      i.fa.fa-fw.fa-check
+                  else
+                    td.absence
+                      i.fa.fa-fw.fa-remove
+        small  출석률 #{parseInt(count/attMax*100)}%
+                        
+  // /.container-fluid

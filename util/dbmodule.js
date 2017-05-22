@@ -20,6 +20,7 @@ fs.readFile('./query/query.xml','utf8', function(error, data) {
         global.doLogin_query = result.query.doLogin;
         global.getCourse_query = result.query.getCourse;
         global.getSchedule_query = result.query.getSchedule;
+        global.getStuAttend_query = result.query.getStuAttend;
       }
     });
   }
@@ -36,7 +37,7 @@ function doLogin(req, res){
     } else {
       if(result[0] && result[0].usr_num){
         req.session.user = {
-          usr_num: result[0].usr_num,
+          usrNum: result[0].usr_num,
           name: result[0].name
         }
         res.redirect('/');
@@ -48,16 +49,17 @@ function doLogin(req, res){
   });
 }
 
-function getCourse(userId){
-  var query = util.format( global.getCourse_query , userId);
+function getCourse(usrNum){
+  var query = util.format( global.getCourse_query , usrNum);
   var evt = new EventEmitter();
+  console.log(query);
   db.query(query, function (error, result, field) {
     var courses = [];
     for(var i=0; i<result.length; i++){
       var course = {
-        cou_num: result[i].cou_num,
-        cou_name: result[i].cou_name,
-        pro_name: result[i].pro_name
+        couNum: result[i].cou_num,
+        couName: result[i].cou_name,
+        proName: result[i].pro_name
       }
       courses.push(course);
     }
@@ -66,21 +68,21 @@ function getCourse(userId){
   return evt;
 }
 
-function getSchedule(userId){
-  var query = util.format( global.getSchedule_query , userId);
+function getSchedule(usrNum){
+  var query = util.format( global.getSchedule_query , usrNum);
   console.log(query);
   var evt = new EventEmitter();
   db.query(query, function (error, result, field) {
     var schedules = [];
     for(var i=0; i<result.length; i++){
       var schedule = {
-        cou_num: result[i].cou_num,
+        couNum: result[i].cou_num,
         weekday: result[i].weekday,
         name: result[i].name,
-        cou_name: result[i].cou_name,
+        couName: result[i].cou_name,
         place: result[i].place,
-        start_time: result[i].start_time,
-        during_time: result[i].during_time
+        startTime: result[i].start_time,
+        duringTime: result[i].during_time
       }
       schedules.push(schedule);
     }
@@ -89,6 +91,27 @@ function getSchedule(userId){
   return evt;
 }
 
+function getStuAttend(usrNum, couNum){
+  var query = util.format( global.getStuAttend_query , usrNum, couNum);
+  console.log(query);
+  var evt = new EventEmitter();
+  db.query(query, function (error, result, field) {
+    var attends = [];
+    for(var i=0; i<result.length; i++){
+      var attend = {
+        couName: result[i].cou_name,
+        stuNum: result[i].stu_num,
+        date: result[i].date,
+        attCnt: result[i].att_cnt
+      }
+      attends.push(attend);
+    }
+    evt.emit('end', error, attends);
+  });
+  return evt;
+}
+
 exports.doLogin = doLogin;
 exports.getCourse = getCourse;
 exports.getSchedule = getSchedule;
+exports.getStuAttend = getStuAttend;
