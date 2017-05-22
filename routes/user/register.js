@@ -6,7 +6,7 @@ var formidable = require('formidable');
 var sessioning = require('../../util/sessioning');
 var dbmodule = require('../../util/dbmodule.js');
 var params = {};
-``
+
 router.use(function(req, res, next){
   params = {}
   params.user = sessioning.getSession(req);

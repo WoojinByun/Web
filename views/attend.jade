@@ -8,7 +8,7 @@ block content
           | 출석 정보 확인
     // /.row
     .row
-      .col-lg-12
+      .col-xs-12.col-lg-6.col-lg-offset-3
         h2
           - var attMax = params.attends.length;
           - var count = 0;
@@ -16,32 +16,28 @@ block content
           small  출석률 #{parseInt(count)}%
         .table-responsive
           table.table.table-hover.table-striped.att
-            - for (var i=0; i<attMax/16; i++)
-              tr.gray
-                th 회차
-                - for (var j=i*16; j<attMax && j<16+i*16; j++)
-                  th
-                    | #{j+1}
-              tr.gray
-                th 날짜
-                - for (var j=i*16; j<attMax && j<16+i*16; j++)
-                  - var dd = params.attends[j].date.getDate();
-                  - var mm = params.attends[j].date.getMonth()+1; 
-                  - if(dd<10) dd='0'+dd;
-                  - if(mm<10) mm='0'+mm;
-                  th
-                    | #{mm + '/' + dd}
-              tr.attendData
+            tr.gray
+              th 회차
+              th 날짜
+              th 출석여부
+            - for (var i=0; i<attMax; i++)
+              - var dd = params.attends[i].date.getDate();
+              - var mm = params.attends[i].date.getMonth()+1; 
+              - if(dd<10) dd='0'+dd;
+              - if(mm<10) mm='0'+mm;
+              - var isAttend = params.attends[i].attCnt >= 5;
+              tr
                 td
-                - for (var j=i*16; j<attMax && j<16+i*16; j++)
-                  - var isAttend = params.attends[j].attCnt >= 5;
-                  if isAttend
-                    - count++;
-                    td.success
-                      i.fa.fa-fw.fa-check
-                  else
-                    td.absence
-                      i.fa.fa-fw.fa-remove
+                  | #{i+1}
+                td
+                  | #{mm + '/' + dd}
+                if isAttend
+                  - count++;
+                  td.success
+                    i.fa.fa-fw.fa-check
+                else
+                  td.absence
+                    i.fa.fa-fw.fa-remove
         small  출석률 #{parseInt(count/attMax*100)}%
                         
   // /.container-fluid
