@@ -30,6 +30,7 @@ function doLogin(req, res){
   var id = req.body.id;
   var pw = req.body.pw;
   var query = util.format( global.doLogin_query , id, pw);
+  console.log(query);
   db.query(query, function (error, result, field) {
     if (error) {
       res.writeHead(500);
@@ -55,7 +56,7 @@ function getCourse(usrNum){
   console.log(query);
   db.query(query, function (error, result, field) {
     var courses = [];
-    for(var i=0; i<result.length; i++){
+    for(var i=0; result && i<result.length; i++){
       var course = {
         couNum: result[i].cou_num,
         couName: result[i].cou_name,

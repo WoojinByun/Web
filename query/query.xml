@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <query>
   <doLogin>
-    SELECT usr_num, name FROM USER WHERE id = '%s' AND pw = '%s'
+    SELECT usr_num, name FROM user WHERE id = '%s' AND pw = '%s'
   </doLogin>
   <getCourse>
     SELECT COU.cou_num, COU.cou_name, PRO.name pro_name
-    FROM USER PRO, COURSE COU, STUDY STD
+    FROM user PRO, course COU, study STD
     WHERE STD.stu_num = %s
     AND STD.cou_num = COU.cou_num
     AND COU.pro_num = PRO.usr_num
   </getCourse>
   <getSchedule>
     SELECT COU.cou_num, COUT.weekday, PRO.name, COU.cou_name, COUT.place, COUT.start_time, COUT.during_time
-    FROM STUDY STU, COURSE_TIME COUT, COURSE COU, USER PRO
+    FROM study STU, course_time COUT, course COU, user PRO
     WHERE STU.stu_num = %s
     AND COUT.cou_num = COU.cou_num
     and COU.pro_num = PRO.usr_num
@@ -20,7 +20,7 @@
   </getSchedule>
   <getStuAttend>
     SELECT COU.cou_name, ATT.stu_num, date(ATT.time) date, sum(ATT.attend_state) att_cnt
-    FROM ATTEND ATT, COURSE COU
+    FROM attend ATT, course COU
     WHERE ATT.stu_num = %s
     AND ATT.cou_num = %s
     AND COU.cou_num = ATT.cou_num
