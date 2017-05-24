@@ -78,9 +78,9 @@ function getDescriptor(filePath, fileName){
   afterImgs = afterImgs.filter(function(e) {
     return beforeImgs.indexOf(e) < 0;
   });
-  shell.cd(rootDir + '/../caffe/build/extract_descriptor/');
   var files = [];
   for(var i=0; i<afterImgs.length; i++){
+    shell.cd(rootDir + '/../caffe/build/extract_descriptor/');
     console.log('-----------------' + './extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.cd(rootDir + '/../face_recognition/src/build/');
