@@ -10,6 +10,7 @@ var index = require('./routes/index');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var attend = require('./routes/attend');
+var checkAttend = require('./routes/checkAttend');
 var schedule = require('./routes/schedule');
 var register = require('./routes/user/register');
 
@@ -40,6 +41,7 @@ app.use(session({
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/attend', attend);
+app.use('/checkAttend', checkAttend);
 app.use('/schedule', schedule);
 app.use('/register', register);
 app.use('/', index);

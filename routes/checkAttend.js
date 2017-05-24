@@ -3,11 +3,14 @@ var router = express.Router();
 var shell = require('shelljs');
 var fs = require('fs-extra');
 var formidable = require('formidable');
-var sessioning = require('../../util/sessioning');
-var dbmodule = require('../../util/dbmodule.js');
-var errorControl = require('../../util/errorControl');
+var sessioning = require('../util/sessioning');
+var dbmodule = require('../util/dbmodule.js');
+var errorControl = require('../util/errorControl');
 var errCtl = errorControl.errCtl;
 var params = {};
+var rootDir = __dirname.replace('/routes','');
+
+////////////////////for DEMO!!!!!!!!!!!!!!
 
 router.use(function(req, res, next){
   params = {}
@@ -28,7 +31,7 @@ router.post('/', function(req, res, next) {
       var fileName = this.openedFiles[i].name;
       var fileExt = fileName.split(".")[fileName.split(".").length-1].toLowerCase();
       var index = fileName.indexOf('/');
-      var newLoc = 'public/faceImage/' + params.user.usrNum + '/temp/';
+      var newLoc = 'public/attChk/temp/';
 
       var newFileName = 'temp.' + fileExt;
       console.log(tempPath, newLoc + newFileName);
@@ -37,7 +40,7 @@ router.post('/', function(req, res, next) {
           console.error(err);
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
-          var discs = getDescriptor(__dirname.replace('/routes/user','') + '/' + newLoc, newFileName);
+          var discs = getDescriptor(rootDir + '/' + newLoc, newFileName);
         }
       });
     }
@@ -61,25 +64,25 @@ function display(req, res){
   if(!(params.courses)){
     return;
   }
-  res.render('user/register', { title: 'register', params: params});
+  res.render('checkAttend', { title: 'checkAttend', params: params});
 }
 
 function getDescriptor(filePath, fileName){
   var userDir = filePath.replace('/temp','')
   var beforeImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
-  shell.cd('../face_recognition/src/build/');
-  shell.exec('./crop ' + userDir + ' ' + filePath+fileName);
-  shell.rm(filePath+fileName);
+  shell.cd(rootDir + '/../face_recognition/src/build/');
+  shell.exec('./crop ' + userDir + ' ' + filePath + fileName);
+  shell.rm(filePath + fileName);
   shell.cd(userDir);
   var afterImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   afterImgs = afterImgs.filter(function(e) {
     return beforeImgs.indexOf(e) < 0;
   });
-  shell.cd('../../../../caffe/build/extract_descriptor/');
+  shell.cd(rootDir + '/../caffe/build/extract_descriptor/');
   for(var i=0; i<afterImgs.length; i++){
     shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
   }
-  shell.cd(userDir+'../../../');
+  shell.cd(rootDir);
 }
 
 module.exports = router;
