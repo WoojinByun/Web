@@ -85,9 +85,9 @@ function getDescriptor(filePath, fileName){
   afterImgs = afterImgs.filter(function(e) {
     return beforeImgs.indexOf(e) < 0;
   });
-  shell.cd('../../../caffe/build/extract_decriptor/');
+  shell.cd('../../../caffe/build/extract_descriptor/');
   for(var i=0; i<afterImgs.length; i++){
-    shell.exec('./extract_decriptor ' + filePath + ' ' + afterImgs[i]);
+    shell.exec('./extract_descriptor ' + filePath + ' ' + afterImgs[i]);
   }
 
 
