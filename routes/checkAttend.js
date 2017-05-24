@@ -88,6 +88,10 @@ function getDescriptor(filePath, fileName){
     var file = shell.exec('./check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37').stdout;
     files.push(file);
   }
+  files.filter(function(e){
+    return e.indexOf('absence') < 0;
+  });
+  
   console.log('---------------------=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=--');
   console.log(files);
   console.log('---------------------=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=--');
