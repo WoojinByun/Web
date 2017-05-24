@@ -70,7 +70,7 @@ function getDescriptor(filePath, fileName){
   var userDir = filePath.replace('/' + params.user.usrNum + '/temp','')
   var beforeImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   shell.cd('../face_recognition/src/build/');
-  shell.exec('./crop ' + filePath + ' ' + filePath+fileName);
+  shell.exec('./crop ' + userDir + ' ' + filePath+fileName);
   shell.rm(filePath+fileName);
   shell.cd(userDir);
   var afterImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
