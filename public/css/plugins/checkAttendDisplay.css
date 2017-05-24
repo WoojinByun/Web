@@ -1,0 +1,15 @@
+.userDiv{
+  padding-top: 20px;
+  font-size: 31px;
+}
+img.userPic{
+  float: left;
+  padding-right: 40px;
+}
+.id{
+  display: inline-block;
+  padding-top: 54px;
+}
+.name{
+  padding-top: 20px;
+}

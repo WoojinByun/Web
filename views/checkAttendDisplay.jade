@@ -1,4 +1,6 @@
 extends layout
+block headExtra
+  link(href='/css/checkAttendDisplay.css', rel='stylesheet')
 block content
   .container-fluid
     // Page Heading
@@ -28,5 +30,4 @@ block content
           p.name 이름 : #{user.name}
             
           
-        
   script(src='/js/register.js')
