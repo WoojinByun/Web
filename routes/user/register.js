@@ -34,13 +34,13 @@ router.post('/upload', function(req, res, next) {
 
       imgs.splice(imgs.length-1,1);
       for(var j=0; j<imgs.length; j++){
-        imgs[j] = parseInt(imgs[j].replace(newLoc+'img','').split('.')[0]);
+        imgs[j] = parseInt(imgs[j].replace(newLoc,'').split('.')[0]);
       }
       imgs = imgs.sort(function(a,b){return a-b;}); // compare with number
       for(j=0; j<imgs.length; j++){
         if(imgs[j] != j) break;
       }
-      var newFileName = 'img' + j + '.' + fileExt;
+      var newFileName = j + '.' + fileExt;
       fs.copy(tempPath, newLoc + newFileName, function(err) {
         if (err) {
           console.error(err);
@@ -75,8 +75,11 @@ function display(req, res){
 }
 
 function getDescriptor(filePath, fileName){
+  var newLoc = 'images/' + params.user.usrNum + '/';
+  var imgs = shell.ls(newLoc + '*.*g').stdout.split('\n');
   shell.cd('../face_recognition/src/build/');
   shell.exec('./crop ' + filePath + ' ' + filePath+fileName);
+  shell.cd(filePath);
   shell.rm(filePath+fileName);
   // shell.cd('../face_recognition/src/build/crop ' + fullFileName + params.user.usrNum);
   // console.log('-----------> ' + './extract_vector ' + fullFileName);
