@@ -77,6 +77,7 @@ function display(req, res){
 function getDescriptor(filePath, fileName){
   shell.cd('../face_recognition/src/build/');
   shell.exec('./crop ' + filePath + ' ' + filePath+fileName);
+  shell.rm(filePath+fileName);
   // shell.cd('../face_recognition/src/build/crop ' + fullFileName + params.user.usrNum);
   // console.log('-----------> ' + './extract_vector ' + fullFileName);
   // shell.exec('./extract_vector ' + fullFileName);
