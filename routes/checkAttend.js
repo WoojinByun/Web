@@ -83,8 +83,9 @@ function getDescriptor(filePath, fileName){
   for(var i=0; i<afterImgs.length; i++){
     console.log('-----------------' + './extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
-    console.log('-----------------' + './check_attendance ' + userDir + afterImgs[i].replace('.png','.txt') + ' 201222350 201220886 201220975 11');
-    files.push(shell.exec('./check_attendance ' + userDir + afterImgs[i].replace('.png','.txt') + ' 201222350 201220886 201220975 11').stdout);
+    console.log('-----------------' + './check_attendance ' + userDir + afterImgs[i].replace('.png','.txt') + ' 34 35 37');
+    var file = shell.exec('./check_attendance ' + userDir + afterImgs[i].replace('.png','.txt') + ' 34 35 37');
+    files.push(file);
   }
   console.log('---------------------=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=--');
   console.log(files);
