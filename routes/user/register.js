@@ -26,7 +26,7 @@ router.post('/upload', function(req, res, next) {
     for (var i=0; i < this.openedFiles.length; i++) {
       var tempPath = this.openedFiles[i].path;
       var fileName = this.openedFiles[i].name;
-      var fileExt = fileName.split(".")[1].toLowerCase();
+      var fileExt = fileName.split(".")[fileName.split(".").length-1].toLowerCase();
       var index = fileName.indexOf('/');
       var newLoc = 'images/' + params.user.usrNum + '/';
       var imgs = shell.ls(newLoc + '*.*g').stdout.split('\n');
@@ -34,18 +34,18 @@ router.post('/upload', function(req, res, next) {
 
       imgs.splice(imgs.length-1,1);
       for(var j=0; j<imgs.length; j++){
-        imgs[j] = parseInt(imgs[j].replace(newLoc,'').split('.')[0]);
+        imgs[j] = parseInt(imgs[j].replace(newLoc+'img','').split('.')[0]);
       }
       imgs = imgs.sort(function(a,b){return a-b;}); // compare with number
       for(j=0; j<imgs.length; j++){
         if(imgs[j] != j) break;
       }
-      var newFileName = j + '.' + fileExt;
+      var newFileName = 'img' + j + '.' + fileExt;
       fs.copy(tempPath, newLoc + newFileName, function(err) {
         if (err) {
           console.error(err);
         } else {
-          console.log('yeah!');
+          console.log(newLoc + newFileName + ' has been saved!');
           var discs = getDescriptor(__dirname.replace('/routes/user','') + '/' + newLoc, newFileName);
         }
       });
@@ -75,9 +75,7 @@ function display(req, res){
 }
 
 function getDescriptor(filePath, fileName){
-  console.log('../face_recognition/src/build/crop ' + filePath + ' ' + filePath+fileName);
   shell.cd('../face_recognition/src/build/');
-  console.log(shell.ls().stdout);
   shell.exec('./crop ' + filePath + ' ' + filePath+fileName);
   // shell.cd('../face_recognition/src/build/crop ' + fullFileName + params.user.usrNum);
   // console.log('-----------> ' + './extract_vector ' + fullFileName);
