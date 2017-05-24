@@ -44,10 +44,10 @@ router.post('/', function(req, res, next) {
           console.log(imgs);
           imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);})
           console.log(imgs);
+          var usrNums = [];
           for(var j=0; j<imgs.length; j++){
             usrNums.push(imgs[j].usrNum);
           }
-          var usrNums = [];
           var userEvt = dbmodule.getUsersInfo(usrNums);
           userEvt.on('end', function(error, users){
             if (error) {
