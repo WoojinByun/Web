@@ -19,6 +19,24 @@ router.use(function(req, res, next){
 });
 
 router.post('/', function(req, res, next) {
+
+  var courseEvt = dbmodule.getCourse(params.user.usrNum);
+  courseEvt.on('end', function(error, courses){
+    if (error) {
+      res.writeHead(500);
+      res.end();
+    }
+    params.courses = courses;
+
+    console.log('user : ', params.user);
+    console.log('courses : ', params.courses);
+    console.log('users : ', params.users);
+    if(!(params.courses && params.users)){
+      return;
+    }
+    res.render('checkAttend', { title: 'checkAttend', params: params});
+  });
+
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
     if (err) {
@@ -42,7 +60,7 @@ router.post('/', function(req, res, next) {
           console.log(newLoc + newFileName + ' has been saved!');
           var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName);
           console.log(imgs);
-          imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);})
+          imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
           console.log(imgs);
           var usrNums = [];
           for(var j=0; j<imgs.length; j++){
@@ -54,31 +72,16 @@ router.post('/', function(req, res, next) {
               res.writeHead(500);
               res.end();
             }
+
+            for(var j=0; j<users.length; j++){
+              users[j].imgSrc = imgs[j].imgSrc;
+            }
             params.users = users;
 
             console.log('user : ', params.user);
             console.log('courses : ', params.courses);
-            console.log('imgs : ', params.imgs);
             console.log('users : ', params.users);
-            if(!(params.courses && params.imgs && params.users)){
-              return;
-            }
-            res.render('checkAttend', { title: 'checkAttend', params: params});
-
-          });
-          var courseEvt = dbmodule.getCourse(params.user.usrNum);
-          courseEvt.on('end', function(error, courses){
-            if (error) {
-              res.writeHead(500);
-              res.end();
-            }
-            params.courses = courses;
-
-            console.log('user : ', params.user);
-            console.log('courses : ', params.courses);
-            console.log('imgs : ', params.imgs);
-            console.log('users : ', params.users);
-            if(!(params.courses && params.imgs && params.users)){
+            if(!(params.courses && params.users)){
               return;
             }
             res.render('checkAttend', { title: 'checkAttend', params: params});
