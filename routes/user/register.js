@@ -28,19 +28,10 @@ router.post('/', function(req, res, next) {
       var fileName = this.openedFiles[i].name;
       var fileExt = fileName.split(".")[fileName.split(".").length-1].toLowerCase();
       var index = fileName.indexOf('/');
-      var newLoc = 'images/' + params.user.usrNum + '/';
+      var newLoc = 'images/' + params.user.usrNum + '/temp/';
       var imgs = shell.ls(newLoc + '*.*g').stdout.split('\n');
-      var j;
 
-      imgs.splice(imgs.length-1,1);
-      for(j=0; j<imgs.length; j++){
-        imgs[j] = parseInt(imgs[j].replace(newLoc,'').split('.')[0]);
-      }
-      imgs = imgs.sort(function(a,b){return a-b;}); // compare with number
-      for(j=0; j<imgs.length; j++){
-        if(imgs[j] != j) break;
-      }
-      var newFileName = j + '.' + fileExt;
+      var newFileName = 'temp.' + fileExt;
       console.log(tempPath, newLoc + newFileName);
       fs.copy(tempPath, newLoc + newFileName, function(err) {
         if (err) {
@@ -76,18 +67,19 @@ function display(req, res){
 }
 
 function getDescriptor(filePath, fileName){
-  var beforeImgs = shell.ls(filePath + '*.*g').stdout.split('\n');
+  var userDir = filePath.replace('/' + params.user.usrNum + '/temp','')
+  var beforeImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   shell.cd('../face_recognition/src/build/');
   shell.exec('./crop ' + filePath + ' ' + filePath+fileName);
-  shell.cd(filePath);
   shell.rm(filePath+fileName);
-  var afterImgs = shell.ls(filePath + '*.*g').stdout.split('\n');
+  shell.cd(userDir);
+  var afterImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   afterImgs = afterImgs.filter(function(e) {
     return beforeImgs.indexOf(e) < 0;
   });
   shell.cd('../../../caffe/build/extract_descriptor/');
   for(var i=0; i<afterImgs.length; i++){
-    shell.exec('./extract_descriptor ' + filePath + ' ' + afterImgs[i]);
+    shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
   }
 
 
@@ -104,7 +96,7 @@ function getDescriptor(filePath, fileName){
   //   console.log('--------------------------------------------------'+arr.length+'------------------------------------------------------------');
   //   console.log(arr);
   // });
-  shell.cd(filePath+'../../');
+  shell.cd(userDir+'../../');
 }
 
 module.exports = router;
