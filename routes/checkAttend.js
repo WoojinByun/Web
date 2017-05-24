@@ -80,8 +80,13 @@ function getDescriptor(filePath, fileName){
   });
   shell.cd(rootDir + '/../caffe/build/extract_descriptor/');
   for(var i=0; i<afterImgs.length; i++){
+    console.log('-----------------' + './extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
+    console.log('-----------------' + './check_attendance ' + userDir + afterImgs[i].replace('.png','.txt') + ' 201222350 201220886 201220975 11');
+    shell.exec('./check_attendance ' + userDir + afterImgs[i].replace('.png','.txt') + ' 201222350 201220886 201220975 11').stdout;
   }
+
+
   shell.cd(rootDir);
 }
 
