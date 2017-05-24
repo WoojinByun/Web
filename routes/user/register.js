@@ -47,7 +47,7 @@ router.post('/upload', function(req, res, next) {
           console.error(err);
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
-          // var discs = getDescriptor(__dirname.replace('/routes/user','') + '/' + newLoc, newFileName);
+          var discs = getDescriptor(__dirname.replace('/routes/user','') + '/' + newLoc, newFileName);
         }
       });
     }
@@ -80,8 +80,8 @@ function getDescriptor(filePath, fileName){
   var imgs = shell.ls(newLoc + '*.*g').stdout.split('\n');
   shell.cd('../face_recognition/src/build/');
   shell.exec('./crop ' + filePath + ' ' + filePath+fileName);
-  // shell.cd(filePath);
-  // shell.rm(filePath+fileName);
+  shell.cd(filePath);
+  shell.rm(filePath+fileName);
 
 
   // shell.cd('../face_recognition/src/build/crop ' + fullFileName + params.user.usrNum);
@@ -97,6 +97,7 @@ function getDescriptor(filePath, fileName){
   //   console.log('--------------------------------------------------'+arr.length+'------------------------------------------------------------');
   //   console.log(arr);
   // });
+  shell.cd(filePath+'../../');
 }
 
 module.exports = router;
