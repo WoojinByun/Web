@@ -68,6 +68,7 @@ function display(req, res){
 }
 
 function getDescriptor(filePath, fileName){
+  shell.exec('rm -rf ' + rootDir + '/public/attChk');
   var userDir = filePath.replace('/temp','')
   var beforeImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   shell.cd(rootDir + '/../face_recognition/src/build/');
@@ -92,7 +93,6 @@ function getDescriptor(filePath, fileName){
   console.log(files);
   console.log('---------------------=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=--');
 
-  shell.exec('rm -rf ' + rootDir + '/public/attChk');
   shell.cd(rootDir);
 }
 
