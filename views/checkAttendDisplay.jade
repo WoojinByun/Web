@@ -20,10 +20,10 @@ block content
           .form-group
             input#file(type='file', name='uploadFile', required='')
           button#upload-button.btn.btn-lg.btn-primary(type='submit', disabled='') Upload image
-    .row
-      .col-lg-8.col-lg-offset-2
-        each user in params.users
-          img(src='#{user.imgSrc}')
+    each user in params.users
+      .row
+        .col-lg-8.col-lg-offset-2
+          img.userPic(src='#{user.imgSrc}')
           p.id 학번 : #{user.id}
           p.name 이름 : #{user.name}
             
