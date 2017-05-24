@@ -81,6 +81,7 @@ router.post('/', function(req, res, next) {
               return;
             }
             res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
+            return;
           }
           var userEvt = dbmodule.getUsersInfo(usrNums);
           userEvt.on('end', function(error, users){
