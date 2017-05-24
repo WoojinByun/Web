@@ -40,7 +40,8 @@ router.post('/', function(req, res, next) {
           console.error(err);
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
-          var discs = getDescriptor(rootDir + '/' + newLoc, newFileName);
+          var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName);
+          console.log(imgs);
         }
       });
     }
@@ -78,7 +79,7 @@ function getDescriptor(filePath, fileName){
   afterImgs = afterImgs.filter(function(e) {
     return beforeImgs.indexOf(e) < 0;
   });
-  var files = [];
+  var attendedImgs = [];
   for(var i=0; i<afterImgs.length; i++){
     shell.cd(rootDir + '/../caffe/build/extract_descriptor/');
     console.log('-----------------' + './extract_descriptor ' + userDir + ' ' + afterImgs[i]);
@@ -86,17 +87,13 @@ function getDescriptor(filePath, fileName){
     shell.cd(rootDir + '/../face_recognition/src/build/');
     console.log('-----------------' + './check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37');
     var file = shell.exec('./check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37').stdout;
-    files.push(file);
+    if(file.indexOf('absence') == -1){
+      attendedImgs.push({usrNum: file.split('/')[8], imgSrc = afterImgs[i].replace('/home/wj/work/Im_Here/Web/public','')});
+    }
   }
-  files = files.filter(function(e){
-    return e.indexOf('absence') < 0;
-  });
-
-  console.log('---------------------=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=--');
-  console.log(files);
-  console.log('---------------------=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=--');
-
   shell.cd(rootDir);
+  if(attendedImgs.length != 0)
+    return attendedImgs;
 }
 
 module.exports = router;
