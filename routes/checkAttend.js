@@ -83,8 +83,9 @@ function getDescriptor(filePath, fileName){
   for(var i=0; i<afterImgs.length; i++){
     console.log('-----------------' + './extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
+    shell.cd(rootDir + '/../face_recognition/src/build/');
     console.log('-----------------' + './check_attendance ' + userDir + afterImgs[i].replace('.png','.txt') + ' 34 35 37');
-    var file = shell.exec('./check_attendance ' + userDir + afterImgs[i].replace('.png','.txt') + ' 34 35 37');
+    var file = shell.exec('./check_attendance ' + userDir + afterImgs[i].replace('.png','.txt') + ' 34 35 37').stdout;
     files.push(file);
   }
   console.log('---------------------=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=--');
