@@ -81,6 +81,8 @@ function getDescriptor(filePath, fileName){
   shell.exec('./crop ' + filePath + ' ' + filePath+fileName);
   shell.cd(filePath);
   shell.rm(filePath+fileName);
+
+
   // shell.cd('../face_recognition/src/build/crop ' + fullFileName + params.user.usrNum);
   // console.log('-----------> ' + './extract_vector ' + fullFileName);
   // shell.exec('./extract_vector ' + fullFileName);
