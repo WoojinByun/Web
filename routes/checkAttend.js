@@ -34,7 +34,7 @@ router.post('/', function(req, res, next) {
     if(!(params.courses && params.users)){
       return;
     }
-    res.render('checkAttend', { title: 'checkAttend', params: params});
+    res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
   });
 
   var form = new formidable.IncomingForm();
@@ -84,7 +84,7 @@ router.post('/', function(req, res, next) {
             if(!(params.courses && params.users)){
               return;
             }
-            res.render('checkAttend', { title: 'checkAttend', params: params});
+            res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
 
           });
         }
@@ -107,7 +107,6 @@ router.get('/', function(req, res, next) {
 function display(req, res){
   console.log('user : ', params.user);
   console.log('courses : ', params.courses);
-  console.log('imgs : ', params.imgs);
   if(!(params.courses)){
     return;
   }
