@@ -76,6 +76,7 @@ function display(req, res){
 }
 
 function getDescriptor(filePath, fileName){
+  shell.cd(filePath);
   var imgs = shell.ls(filePath + '*.*g').stdout.split('\n');
   console.log(imgs);
   shell.cd('../face_recognition/src/build/');
@@ -84,11 +85,11 @@ function getDescriptor(filePath, fileName){
   shell.rm(filePath+fileName);
   var imgs2 = shell.ls('*.*g').stdout.split('\n');
   console.log(imgs2);
-  imgs = imgs.filter( function( el ) {
-    return !imgs2.indexOf( el ) < 0;
+  imgs2 = imgs2.filter( function( el ) {
+    return !imgs.indexOf( el ) < 0;
   });
   console.log('--------------------------------------------------------------------------------');
-  console.log(imgs);
+  console.log(imgs2);
 
 
   // shell.cd('../face_recognition/src/build/crop ' + fullFileName + params.user.usrNum);
