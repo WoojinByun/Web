@@ -33,7 +33,7 @@ router.post('/', function(req, res, next) {
       var index = fileName.indexOf('/');
       var newLoc = 'public/attChk/temp/';
 
-      var newFileName = 'temp.' + fileExt;
+      var newFileName = 'attTest.' + fileExt;
       console.log(tempPath, newLoc + newFileName);
       fs.copy(tempPath, newLoc + newFileName, function(err) {
         if (err) {
