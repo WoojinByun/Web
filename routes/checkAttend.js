@@ -105,7 +105,7 @@ function display(req, res){
   console.log('user : ', params.user);
   console.log('courses : ', params.courses);
   console.log('imgs : ', params.imgs);
-  if(!(params.courses && params.imgs)){
+  if(!(params.courses)){
     return;
   }
   res.render('checkAttend', { title: 'checkAttend', params: params});
