@@ -15,7 +15,7 @@ router.use(function(req, res, next){
   errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
 
-router.post('/upload', function(req, res, next) {
+router.post('/', function(req, res, next) {
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
     if (err) {
@@ -33,7 +33,7 @@ router.post('/upload', function(req, res, next) {
       var j;
 
       imgs.splice(imgs.length-1,1);
-      for(var j=0; j<imgs.length; j++){
+      for(j=0; j<imgs.length; j++){
         imgs[j] = parseInt(imgs[j].replace(newLoc,'').split('.')[0]);
       }
       imgs = imgs.sort(function(a,b){return a-b;}); // compare with number
@@ -76,18 +76,15 @@ function display(req, res){
 }
 
 function getDescriptor(filePath, fileName){
-  var imgs = shell.ls(filePath + '*.*g').stdout.split('\n');
-  console.log(imgs);
+  var beforeImgs = shell.ls(filePath + '*.*g').stdout.split('\n');
   shell.cd('../face_recognition/src/build/');
   shell.exec('./crop ' + filePath + ' ' + filePath+fileName);
   shell.cd(filePath);
   shell.rm(filePath+fileName);
-  var imgs2 = shell.ls(filePath + '*.*g').stdout.split('\n');
-  console.log(imgs2);
-  imgs2 = imgs2.filter( function( el ) {
-    return imgs.indexOf( el ) < 0;
+  var afterImgs = shell.ls(filePath + '*.*g').stdout.split('\n');
+  afterImgs = afterImgs.filter(function(e) {
+    return beforeImgs.indexOf(e) < 0;
   });
-  console.log('--------------------------------------------------------------------------------');
   console.log(imgs2);
 
 
