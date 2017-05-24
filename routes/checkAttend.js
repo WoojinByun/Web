@@ -55,7 +55,16 @@ router.post('/', function(req, res, next) {
               res.end();
             }
             params.users = users;
-            display(req, res);
+
+            console.log('user : ', params.user);
+            console.log('courses : ', params.courses);
+            console.log('imgs : ', params.imgs);
+            console.log('users : ', params.users);
+            if(!(params.courses && params.imgs && params.users)){
+              return;
+            }
+            res.render('checkAttend', { title: 'checkAttend', params: params});
+
           });
           var courseEvt = dbmodule.getCourse(params.user.usrNum);
           courseEvt.on('end', function(error, courses){
@@ -64,7 +73,16 @@ router.post('/', function(req, res, next) {
               res.end();
             }
             params.courses = courses;
-            display(req, res);
+
+            console.log('user : ', params.user);
+            console.log('courses : ', params.courses);
+            console.log('imgs : ', params.imgs);
+            console.log('users : ', params.users);
+            if(!(params.courses && params.imgs && params.users)){
+              return;
+            }
+            res.render('checkAttend', { title: 'checkAttend', params: params});
+
           });
         }
       });
@@ -87,8 +105,7 @@ function display(req, res){
   console.log('user : ', params.user);
   console.log('courses : ', params.courses);
   console.log('imgs : ', params.imgs);
-  console.log('users : ', params.users);
-  if(!(params.courses && params.imgs && params.users)){
+  if(!(params.courses && params.imgs)){
     return;
   }
   res.render('checkAttend', { title: 'checkAttend', params: params});
