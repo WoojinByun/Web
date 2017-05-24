@@ -67,7 +67,7 @@ function display(req, res){
 }
 
 function getDescriptor(filePath, fileName){
-  var userDir = filePath.replace('/' + params.user.usrNum + '/temp','')
+  var userDir = filePath.replace('/temp','')
   var beforeImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   shell.cd('../face_recognition/src/build/');
   shell.exec('./crop ' + userDir + ' ' + filePath+fileName);
