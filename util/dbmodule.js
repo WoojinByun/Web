@@ -132,7 +132,7 @@ function getUsersInfo(usrNums){
       }
       users.push(user);
     }
-    evt.emit('end', error, attends);
+    evt.emit('end', error, users);
   });
   return evt;
 }
