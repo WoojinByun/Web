@@ -76,17 +76,16 @@ function display(req, res){
 }
 
 function getDescriptor(filePath, fileName){
-  var newLoc = 'images/' + params.user.usrNum + '/';
-  var imgs = shell.ls(newLoc + '*.*g').stdout.split('\n');
+  var imgs = shell.ls(filePath + '*.*g').stdout.split('\n');
   console.log(imgs);
   shell.cd('../face_recognition/src/build/');
   shell.exec('./crop ' + filePath + ' ' + filePath+fileName);
   shell.cd(filePath);
   shell.rm(filePath+fileName);
-  var imgs2 = shell.ls(newLoc + '*.*g').stdout.split('\n');
+  var imgs2 = shell.ls('*.*g').stdout.split('\n');
   console.log(imgs2);
   imgs = imgs.filter( function( el ) {
-    return !imgs2.includes( el );
+    return !imgs2.indexOf( el ) < 0;
   });
   console.log('--------------------------------------------------------------------------------');
   console.log(imgs);
