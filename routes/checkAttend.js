@@ -59,13 +59,28 @@ router.post('/', function(req, res, next) {
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
           var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName);
-          imgs = [] ? imgs == undefined : imgs;
+          var isNoPerson = false;
+          if(imgs == undefined){
+            imgs = [{imgSrc:'/img/noimage.jpg', id: '', name: '찾는 사람이 없습니다.'}];
+            isNoPerson = true;
+          }
           console.log(imgs);
           imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
           console.log(imgs);
           var usrNums = [];
           for(var j=0; j<imgs.length; j++){
             usrNums.push(imgs[j].usrNum);
+          }
+          if(isNoPerson){
+            params.users = imgs;
+
+            console.log('user : ', params.user);
+            console.log('courses : ', params.courses);
+            console.log('users : ', params.users);
+            if(!(params.courses && params.users)){
+              return;
+            }
+            res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
           }
           var userEvt = dbmodule.getUsersInfo(usrNums);
           userEvt.on('end', function(error, users){
