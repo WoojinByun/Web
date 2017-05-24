@@ -59,6 +59,7 @@ router.post('/', function(req, res, next) {
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
           var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName);
+          imgs = [] ? imgs == undefined : imgs;
           console.log(imgs);
           imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
           console.log(imgs);
