@@ -26,4 +26,10 @@
     AND COU.cou_num = ATT.cou_num
     GROUP by ATT.cou_num, ATT.stu_num, date(ATT.time)
   </getStuAttend>
+  <getUsersInfo>
+    SELECT usr_num, id, name
+    FROM user
+    WHERE usr_num IN (%s)
+  </getUsersInfo>
+
 </query>

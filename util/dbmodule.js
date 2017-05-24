@@ -21,6 +21,7 @@ fs.readFile('./query/query.xml','utf8', function(error, data) {
         global.getCourse_query = result.query.getCourse;
         global.getSchedule_query = result.query.getSchedule;
         global.getStuAttend_query = result.query.getStuAttend;
+        global.getUsersInfo_query = result.query.getUsersInfo;
       }
     });
   }
@@ -111,8 +112,33 @@ function getStuAttend(usrNum, couNum){
   });
   return evt;
 }
+function getUsersInfo(usrNums){
+  var usrNumStr = '';
+  for(var i=0; i<usrNums.length; i++){
+    if(i != 0)
+      usrNumStr += ',';
+    usrNumStr += usrNums[i];
+  }
+  var query = util.format( global.getUsersInfo_query , usrNumStr);
+  console.log(query);
+  var evt = new EventEmitter();
+  db.query(query, function (error, result, field) {
+    var users = [];
+    for(var i=0; i<result.length; i++){
+      var user = {
+        usrNum: result[i].usr_num,
+        id: result[i].id,
+        name: result[i].name
+      }
+      users.push(user);
+    }
+    evt.emit('end', error, attends);
+  });
+  return evt;
+}
 
 exports.doLogin = doLogin;
 exports.getCourse = getCourse;
 exports.getSchedule = getSchedule;
 exports.getStuAttend = getStuAttend;
+exports.getUsersInfo = getUsersInfo;

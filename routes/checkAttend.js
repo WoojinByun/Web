@@ -42,6 +42,30 @@ router.post('/', function(req, res, next) {
           console.log(newLoc + newFileName + ' has been saved!');
           var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName);
           console.log(imgs);
+          imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);})
+          console.log(imgs);
+          for(var j=0; j<imgs.length; j++){
+            usrNums.push(imgs[j].usrNum);
+          }
+          var usrNums = [];
+          var userEvt = dbmodule.getUsersInfo(usrNums);
+          userEvt.on('end', function(error, users){
+            if (error) {
+              res.writeHead(500);
+              res.end();
+            }
+            params.users = users;
+            display(req, res);
+          });
+          var courseEvt = dbmodule.getCourse(params.user.usrNum);
+          courseEvt.on('end', function(error, courses){
+            if (error) {
+              res.writeHead(500);
+              res.end();
+            }
+            params.courses = courses;
+            display(req, res);
+          });
         }
       });
     }
@@ -62,7 +86,9 @@ router.get('/', function(req, res, next) {
 function display(req, res){
   console.log('user : ', params.user);
   console.log('courses : ', params.courses);
-  if(!(params.courses)){
+  console.log('imgs : ', params.imgs);
+  console.log('users : ', params.users);
+  if(!(params.courses && params.imgs && params.users)){
     return;
   }
   res.render('checkAttend', { title: 'checkAttend', params: params});
