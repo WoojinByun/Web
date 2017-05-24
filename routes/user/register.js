@@ -38,6 +38,7 @@ router.post('/', function(req, res, next) {
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
           var discs = getDescriptor(__dirname.replace('/routes/user','') + '/' + newLoc, newFileName);
+          res.redirect('/register?msg='+'등록이 완료되었습니다.');
         }
       });
     }
