@@ -92,7 +92,7 @@ function getDescriptor(filePath, fileName){
   console.log(files);
   console.log('---------------------=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=---=-=-=-=--');
 
-  shell.rm(rootDir + '/public/attChk');
+  shell.exec('rm -rf ' + rootDir + '/public/attChk');
   shell.cd(rootDir);
 }
 
