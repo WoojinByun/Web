@@ -130,8 +130,8 @@ function getDescriptor(filePath, fileName){
     console.log('-----------------' + './extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.cd(rootDir + '/../face_recognition/src/build/');
-    console.log('-----------------' + './check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37');
-    var file = shell.exec('./check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37').stdout;
+    console.log('-----------------' + './check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37 11');
+    var file = shell.exec('./check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37 11').stdout;
     if(file.indexOf('absence') == -1){
       attendedImgs.push({usrNum: file.split('/')[8], imgSrc: afterImgs[i].replace('/home/wj/work/Im_Here/Web/public','')});
     }
