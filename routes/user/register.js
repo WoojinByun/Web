@@ -85,7 +85,10 @@ function getDescriptor(filePath, fileName){
   afterImgs = afterImgs.filter(function(e) {
     return beforeImgs.indexOf(e) < 0;
   });
-  console.log(imgs2);
+  shell.cd('../../../caffe/build/extract_vector/');
+  for(var i=0; i<afterImgs.length; i++){
+    shell.exec('./extract_vector ' + filePath + ' ' + afterImgs[i]);
+  }
 
 
   // shell.cd('../face_recognition/src/build/crop ' + fullFileName + params.user.usrNum);
