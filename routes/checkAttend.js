@@ -88,7 +88,7 @@ function getDescriptor(filePath, fileName){
     console.log('-----------------' + './check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37');
     var file = shell.exec('./check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37').stdout;
     if(file.indexOf('absence') == -1){
-      attendedImgs.push({usrNum: file.split('/')[8], imgSrc = afterImgs[i].replace('/home/wj/work/Im_Here/Web/public','')});
+      attendedImgs.push({usrNum: file.split('/')[8], imgSrc: afterImgs[i].replace('/home/wj/work/Im_Here/Web/public','')});
     }
   }
   shell.cd(rootDir);
