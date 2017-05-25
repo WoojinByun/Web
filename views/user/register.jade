@@ -8,6 +8,10 @@ block content
           | 얼굴 등록
           small Face Register
     // /.row
+    each img in params.imgs
+      .row
+        .userDiv.col-lg-8.col-lg-offset-2
+          img.userPic(src='#{user.imgSrc}')
     .row
       .col-lg-offset-2
       .col-lg-8

@@ -7,6 +7,7 @@ var sessioning = require('../../util/sessioning');
 var dbmodule = require('../../util/dbmodule.js');
 var errorControl = require('../../util/errorControl');
 var errCtl = errorControl.errCtl;
+var rootDir = __dirname.replace('/routes/user','');
 var params = {};
 
 router.use(function(req, res, next){
@@ -37,7 +38,7 @@ router.post('/', function(req, res, next) {
           console.error(err);
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
-          var discs = getDescriptor(__dirname.replace('/routes/user','') + '/' + newLoc, newFileName);
+          var discs = getDescriptor(rootDir + '/' + newLoc, newFileName);
           res.redirect('/register?msg='+'등록이 완료되었습니다.');
         }
       });
@@ -45,6 +46,7 @@ router.post('/', function(req, res, next) {
   });
 });
 router.get('/', function(req, res, next) {
+  params.imgs = getFaceImage();
   var courseEvt = dbmodule.getCourse(params.user.usrNum);
   courseEvt.on('end', function(error, courses){
     if (error) {
@@ -54,15 +56,28 @@ router.get('/', function(req, res, next) {
     params.courses = courses;
     display(req, res);
   });
+
 });
 
 function display(req, res){
   console.log('user : ', params.user);
   console.log('courses : ', params.courses);
-  if(!(params.courses)){
+  console.log('imgs : ', params.imgs);
+  if(!(params.courses && params.imgs)){
     return;
   }
   res.render('user/register', { title: 'register', params: params});
+}
+
+function getFaceImage(usrNum){
+  shell.cd(rootDir);
+  var imgs = shell.ls('/public/faceImage/' + usrNum + '/*.png').stdout.split('\n');
+  console.log(imgs);
+  imgs = imgs.filter(function(e){
+    return e == '';
+  });
+  console.log(imgs);
+  return imgs;
 }
 
 function getDescriptor(filePath, fileName){
