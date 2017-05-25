@@ -1,3 +1,4 @@
 config/database.js
 npm-debug.log
 public/faceImage/
+public/attChk/
