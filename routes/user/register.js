@@ -46,7 +46,7 @@ router.post('/', function(req, res, next) {
   });
 });
 router.get('/', function(req, res, next) {
-  params.imgs = getFaceImage();
+  params.imgSrcs = getFaceImage();
   var courseEvt = dbmodule.getCourse(params.user.usrNum);
   courseEvt.on('end', function(error, courses){
     if (error) {
@@ -62,20 +62,20 @@ router.get('/', function(req, res, next) {
 function display(req, res){
   console.log('user : ', params.user);
   console.log('courses : ', params.courses);
-  console.log('imgs : ', params.imgs);
-  if(!(params.courses && params.imgs)){
+  console.log('imgSrcs : ', params.imgSrcs);
+  if(!(params.courses && params.imgSrcs)){
     return;
   }
   res.render('user/register', { title: 'register', params: params});
 }
 
 function getFaceImage(){
-  shell.cd(rootDir);
-  var imgs = shell.ls('public/faceImage/' + params.user.usrNum + '/*.png').stdout.split('\n');
-  console.log(imgs);
-  imgs = imgs.map(function(e){ return e != '' ? '/'+e : false; });
-  console.log(imgs);
-  return imgs;
+  shell.cd(rootDir + '/public');
+  var imgSrcs = shell.ls('faceImage/' + params.user.usrNum + '/*.png').stdout.split('\n');
+  console.log(imgSrcs);
+  imgSrcs = imgSrcs.map(function(e){ return e != '' ? '/'+e : false; });
+  console.log(imgSrcs);
+  return imgSrcs;
 }
 
 function getDescriptor(filePath, fileName){
