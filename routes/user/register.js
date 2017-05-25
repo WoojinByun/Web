@@ -69,9 +69,9 @@ function display(req, res){
   res.render('user/register', { title: 'register', params: params});
 }
 
-function getFaceImage(usrNum){
+function getFaceImage(){
   shell.cd(rootDir);
-  var imgs = shell.ls('/public/faceImage/' + usrNum + '/*.png').stdout.split('\n');
+  var imgs = shell.ls('/public/faceImage/' + params.user.usrNum + '/*.png').stdout.split('\n');
   console.log(imgs);
   imgs = imgs.filter(function(e){
     return e == '';
