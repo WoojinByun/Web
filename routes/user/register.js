@@ -73,9 +73,7 @@ function getFaceImage(){
   shell.cd(rootDir);
   var imgs = shell.ls('public/faceImage/' + params.user.usrNum + '/*.png').stdout.split('\n');
   console.log(imgs);
-  imgs = imgs.filter(function(e){
-    return e != '';
-  });
+  imgs = imgs.map(function(e){ return e != '' ? '/'+e : false; });
   console.log(imgs);
   return imgs;
 }
