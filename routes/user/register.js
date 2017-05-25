@@ -71,7 +71,7 @@ function display(req, res){
 
 function getFaceImage(){
   shell.cd(rootDir);
-  var imgs = shell.ls('/public/faceImage/' + params.user.usrNum + '/*.png').stdout.split('\n');
+  var imgs = shell.ls('public/faceImage/' + params.user.usrNum + '/*.png').stdout.split('\n');
   console.log(imgs);
   imgs = imgs.filter(function(e){
     return e == '';
