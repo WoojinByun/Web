@@ -8,10 +8,6 @@ block content
           | 얼굴 등록
           small Face Register
     // /.row
-    each imgSrc in params.imgSrcs
-      .row
-        .userDiv.col-lg-8.col-lg-offset-2
-          img.userPic(src='#{imgSrc}')
     .row
       .col-lg-offset-2
       .col-lg-8
@@ -24,7 +20,10 @@ block content
           .form-group
             input#file(type='file', name='uploadFile', required='')
           button#upload-button.btn.btn-lg.btn-primary(type='submit', disabled='') Upload image
-        
+    .row
+      .userDiv.col-lg-8.col-lg-offset-2
+        each imgSrc in params.imgSrcs
+          img.userPic(src='#{imgSrc}')
   script(src='/js/register.js')
   script.
     !{params.js}

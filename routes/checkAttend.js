@@ -13,29 +13,11 @@ var rootDir = __dirname.replace('/routes','');
 ////////////////////for DEMO!!!!!!!!!!!!!!
 
 router.use(function(req, res, next){
-  params = {}
-  params.user = sessioning.getSession(req);
+  params = sessioning.getSession(req);
   errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
 
 router.post('/', function(req, res, next) {
-
-  var courseEvt = dbmodule.getCourse(params.user.usrNum);
-  courseEvt.on('end', function(error, courses){
-    if (error) {
-      res.writeHead(500);
-      res.end();
-    }
-    params.courses = courses;
-
-    console.log('user : ', params.user);
-    console.log('courses : ', params.courses);
-    console.log('users : ', params.users);
-    if(!(params.courses && params.users)){
-      return;
-    }
-    res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
-  });
 
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
@@ -77,7 +59,7 @@ router.post('/', function(req, res, next) {
             console.log('user : ', params.user);
             console.log('courses : ', params.courses);
             console.log('users : ', params.users);
-            if(!(params.courses && params.users)){
+            if(!params.users){
               return;
             }
             res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
@@ -110,23 +92,12 @@ router.post('/', function(req, res, next) {
   });
 });
 router.get('/', function(req, res, next) {
-  var courseEvt = dbmodule.getCourse(params.user.usrNum);
-  courseEvt.on('end', function(error, courses){
-    if (error) {
-      res.writeHead(500);
-      res.end();
-    }
-    params.courses = courses;
-    display(req, res);
-  });
+  display(req, res);
 });
 
 function display(req, res){
   console.log('user : ', params.user);
   console.log('courses : ', params.courses);
-  if(!(params.courses)){
-    return;
-  }
   res.render('checkAttend', { title: 'checkAttend', params: params});
 }
 

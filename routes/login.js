@@ -5,8 +5,7 @@ var errorControl = require('../util/errorControl');
 var errCtl = errorControl.errCtl;
 
 router.use(function(req, res, next){
-  params = {}
-  params.user = sessioning.getSession(req);
+  params = sessioning.getSession(req);
   errCtl(res, next, params.user, '/', '이미 로그인이 되어있습니다. 메인 페이지로 이동합니다.');
 });
 router.post('/', sessioning.doLogin);

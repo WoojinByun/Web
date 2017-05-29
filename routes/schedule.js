@@ -7,21 +7,10 @@ var errCtl = errorControl.errCtl;
 var params;
 
 router.use(function(req, res, next){
-  params = {}
-  params.user = sessioning.getSession(req);
+  params = sessioning.getSession(req);
   errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
 router.get('/', function(req, res, next) {
-  var courseEvt = dbmodule.getCourse(params.user.usrNum);
-  courseEvt.on('end', function(error, courses){
-    if (error) {
-      res.writeHead(500);
-      res.end();
-    }
-    params.courses = courses;
-    display(req, res);
-  });
-
   var scheduleEvt = dbmodule.getSchedule(params.user.usrNum);
   scheduleEvt.on('end', function(error, schedules){
     if (error) {
@@ -37,7 +26,7 @@ function display(req, res){
   console.log("params.user : ", params.user);
   console.log("params.courses : ", params.courses);
   console.log("params.schedules : ", params.schedules);
-  if(!(params.courses && params.schedules)){
+  if(!params.schedules){
     return;
   }
   res.render('schedule', { title: 'Schedule', params: params});

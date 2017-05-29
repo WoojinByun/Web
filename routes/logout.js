@@ -6,7 +6,7 @@ var errorControl = require('../util/errorControl');
 var errCtl = errorControl.errCtl;
 
 router.use(function(req, res, next){
-  errCtl(res, next, !sessioning.getSession(req), '/', '');
+  errCtl(res, next, !sessioning.getSession(req).user, '/', '');
 });
 router.use(sessioning.doLogout);
 

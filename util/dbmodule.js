@@ -18,7 +18,9 @@ fs.readFile('./query/query.xml','utf8', function(error, data) {
         console.log(error);
       } else {
         global.doLogin_query = result.query.doLogin;
-        global.getCourse_query = result.query.getCourse;
+        global.getStuInfo_query = result.query.getStuInfo;
+        global.getProInfo_query = result.query.getProInfo;
+        global.getAdminInfo_query = result.query.getAdminInfo;
         global.getSchedule_query = result.query.getSchedule;
         global.getStuAttend_query = result.query.getStuAttend;
         global.getUsersInfo_query = result.query.getUsersInfo;
@@ -34,15 +36,23 @@ function doLogin(req, res){
   console.log(query);
   db.query(query, function (error, result, field) {
     if (error) {
-      res.writeHead(500);
-      res.end();
-    } else {
+      res.writeHead(500).res.end();
+    }
+    else {
       if(result[0] && result[0].usr_num){
-        req.session.user = {
-          usrNum: result[0].usr_num,
-          name: result[0].name
-        }
-        res.redirect('/');
+        var evt = getUserInfo(result[0].usr_num, result[0].auth_type);
+        evt.on('err', function(error){
+          console.log(error);
+          res.writeHead(500);
+          res.end();
+          return false;
+        });
+        evt.on('end', function(error, datas){
+          if (error) res.writeHead(500).end();
+          req.session.user = datas.user;
+          req.session.courses = datas.courses;
+          res.redirect('/');
+        });
       }
       else {
         res.render('login', { title: 'Login', state: 'wrong' });
@@ -51,21 +61,29 @@ function doLogin(req, res){
   });
 }
 
-function getCourse(usrNum){
-  var query = util.format( global.getCourse_query , usrNum);
+function getUserInfo(usrNum, authType){
   var evt = new EventEmitter();
+  var targetQuery;
+  if(authType == 1) targetQuery = global.getStuInfo_query;
+  else if(authType == 2) targetQuery = global.getProInfo_query;
+  else if(authType == 3) targetQuery = global.getAdminInfo_query;
+  var query = util.format(targetQuery, usrNum);
   console.log(query);
   db.query(query, function (error, result, field) {
-    var courses = [];
-    for(var i=0; result && i<result.length; i++){
-      var course = {
-        couNum: result[i].cou_num,
-        couName: result[i].cou_name,
-        proName: result[i].pro_name
+    var datas = {user: {}, courses: []};
+    if(!error){
+      datas.user.usrNum = result[0].usr_num;
+      datas.user.name = result[0].name;
+      datas.user.authType = result[0].auth_type;
+      for(var i=0; i<result.length; i++){
+        datas.courses.push({
+          couNum: result[i].cou_num,
+          couName: result[i].cou_name,
+          proName: result[i].pro_name
+        });
       }
-      courses.push(course);
     }
-    evt.emit('end', error, courses);
+    evt.emit('end', error, datas);
   });
   return evt;
 }
@@ -138,7 +156,6 @@ function getUsersInfo(usrNums){
 }
 
 exports.doLogin = doLogin;
-exports.getCourse = getCourse;
 exports.getSchedule = getSchedule;
 exports.getStuAttend = getStuAttend;
 exports.getUsersInfo = getUsersInfo;

@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <query>
   <doLogin>
-    SELECT usr_num, name FROM user WHERE id = '%s' AND pw = '%s'
+    SELECT usr_num, name, auth_type FROM user WHERE id = '%s' AND pw = '%s'
   </doLogin>
+  <getStuInfo>
+    SELECT USR.usr_num, USR.name, USR.auth_type, COU.cou_num, COU.cou_name, PRO.name pro_name
+  	FROM user USR, course COU, study STD, user PRO
+  	WHERE USR.usr_num = %s
+  	AND USR.usr_num = STD.stu_num
+  	AND STD.cou_num = COU.cou_num
+  	AND COU.pro_num = PRO.usr_num
+  </getStuInfo>
+  <getProInfo>
+    SELECT PRO.usr_num, PRO.name, PRO.auth_type, COU.cou_num, COU.cou_name, PRO.name pro_name
+  	FROM user PRO, course COU
+  	WHERE PRO.usr_num = %s
+  	AND PRO.usr_num = COU.pro_num
+  </getProInfo>
+  <getAdminInfo>
+    <!-- SELECT USR.usr_num, USR.name, USR.auth_type, COU.cou_num, COU.cou_name, PRO.name pro_name
+  	FROM user USR, course COU, study STD, user PRO
+  	WHERE USR.usr_num = %s
+  	AND USR.usr_num = STD.stu_num
+  	AND STD.cou_num = COU.cou_num
+  	AND COU.pro_num = PRO.usr_num; -->
+  </getAdminInfo>
   <getCourse>
     SELECT COU.cou_num, COU.cou_name, PRO.name pro_name
     FROM user PRO, course COU, study STD

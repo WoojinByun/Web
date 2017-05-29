@@ -7,37 +7,38 @@ block content
         h1.page-header
           | 출석 정보 확인
     // /.row
-    .row
-      .col-xs-12.col-lg-6.col-lg-offset-3
-        h2
-          - var attMax = params.attends.length;
-          - var count = 0;
-          | #{params.attends[0].couName}
-          small  출석률 #{parseInt(count)}%
-        .table-responsive
-          table.table.table-hover.table-striped.att
-            tr.gray
-              th 회차
-              th 날짜
-              th 출석여부
-            - for (var i=0; i<attMax; i++)
-              - var dd = params.attends[i].date.getDate();
-              - var mm = params.attends[i].date.getMonth()+1; 
-              - if(dd<10) dd='0'+dd;
-              - if(mm<10) mm='0'+mm;
-              - var isAttend = params.attends[i].attCnt >= 5;
-              tr
-                td
-                  | #{i+1}
-                td
-                  | #{mm + '/' + dd}
-                if isAttend
-                  - count++;
-                  td.success
-                    i.fa.fa-fw.fa-check
-                else
-                  td.absence
-                    i.fa.fa-fw.fa-remove
-        small  출석률 #{parseInt(count/attMax*100)}%
+    if params.attends.length != 0
+      .row
+        .col-xs-12.col-lg-6.col-lg-offset-3
+          h2
+            - var attMax = params.attends.length;
+            - var count = 0;
+            | #{params.attends[0].couName}
+            small  출석률 #{parseInt(count)}%
+          .table-responsive
+            table.table.table-hover.table-striped.att
+              tr.gray
+                th 회차
+                th 날짜
+                th 출석여부
+              - for (var i=0; i<attMax; i++)
+                - var dd = params.attends[i].date.getDate();
+                - var mm = params.attends[i].date.getMonth()+1; 
+                - if(dd<10) dd='0'+dd;
+                - if(mm<10) mm='0'+mm;
+                - var isAttend = params.attends[i].attCnt >= 5;
+                tr
+                  td
+                    | #{i+1}
+                  td
+                    | #{mm + '/' + dd}
+                  if isAttend
+                    - count++;
+                    td.success
+                      i.fa.fa-fw.fa-check
+                  else
+                    td.absence
+                      i.fa.fa-fw.fa-remove
+          small  출석률 #{parseInt(count/attMax*100)}%
                         
   // /.container-fluid
