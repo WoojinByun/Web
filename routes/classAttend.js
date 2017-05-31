@@ -14,7 +14,7 @@ var rootDir = __dirname.replace('/routes','');
 router.post('/attend', function(req, res, next) {
   console.log("!!!!!!!!!!!!");
   console.log(req.body);
-}
+});
 router.use(function(req, res, next){
   params = sessioning.getSession(req);
   errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
