@@ -13,7 +13,33 @@ var rootDir = __dirname.replace('/routes','');
 ////////////////////for DEMO!!!!!!!!!!!!!!
 router.post('/attend', function(req, res, next) {
   console.log("!!!!!!!!!!!!");
+  console.log(req);
   console.log(req.body);
+  var form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+    if (err) {
+      console.error(err);
+    }
+  });
+  form.on('end', function(fields, files) {
+    for (var i=0; i < this.openedFiles.length; i++) {
+      var tempPath = this.openedFiles[i].path;
+      var fileName = this.openedFiles[i].name;
+      var fileExt = fileName.split(".")[fileName.split(".").length-1].toLowerCase();
+      var index = fileName.indexOf('/');
+      var newLoc = 'public/rasp/';
+
+      var newFileName = 'attTest.' + fileExt;
+      console.log(tempPath, newLoc + newFileName);
+      fs.copy(tempPath, newLoc + newFileName, function(err) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log(newLoc + newFileName + ' has been saved!');
+        }
+      });
+    }
+  });
 });
 router.use(function(req, res, next){
   params = sessioning.getSession(req);
