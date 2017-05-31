@@ -11,6 +11,7 @@ var login = require('./routes/login');
 var logout = require('./routes/logout');
 var attend = require('./routes/attend');
 var checkAttend = require('./routes/checkAttend');
+var classAttend = require('./routes/classAttend');
 var schedule = require('./routes/schedule');
 var register = require('./routes/user/register');
 
@@ -42,6 +43,7 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/attend', attend);
 app.use('/checkAttend', checkAttend);
+app.use('/classAttend', classAttend);
 app.use('/schedule', schedule);
 app.use('/register', register);
 app.use('/', index);
