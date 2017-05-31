@@ -36,6 +36,7 @@ router.post('/attend', function(req, res, next) {
           console.error(err);
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
+          res.send(1);
         }
       });
     }
