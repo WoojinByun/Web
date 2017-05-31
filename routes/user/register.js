@@ -9,6 +9,7 @@ var errorControl = require('../../util/errorControl');
 var errCtl = errorControl.errCtl;
 var rootDir = __dirname.replace('/routes/user','');
 var params = {};
+var rootDir = __dirname.replace('/routes/user','');
 
 router.use(function(req, res, next){
   params = sessioning.getSession(req);
