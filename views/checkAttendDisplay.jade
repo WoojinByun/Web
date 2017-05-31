@@ -23,13 +23,19 @@ block content
             input#file(type='file', name='uploadFile', required='')
           button#upload-button.btn.btn-lg.btn-primary(type='submit', disabled='') Upload image
     form#doAttend(action='/checkAttend/attend', method='post')
+      .row
+        input.form-control(type='text', name='couNum', placeholder='Course Number')
+        input.form-control(type='text', name='order', placeholder='Order')
+        input.form-control(type='datetime', name='time')
       each user in params.users
         .row
           .userDiv.col-lg-8.col-lg-offset-2
             img.userPic(src='#{user.imgSrc}')
             p.id 학번 : #{user.id}
             p.name 이름 : #{user.name}
-            input(type='checkbox', name='id', value=user.id)
-            
-          
+            div.checkbox
+              label
+                input.form-control(type='checkbox', name='usrNums', value=user.usrNum)
+      .row
+        input.form-control(type='submit')
   script(src='/js/register.js')
