@@ -7,7 +7,6 @@ var sessioning = require('../../util/sessioning');
 var dbmodule = require('../../util/dbmodule.js');
 var errorControl = require('../../util/errorControl');
 var errCtl = errorControl.errCtl;
-var rootDir = __dirname.replace('/routes/user','');
 var params = {};
 var rootDir = __dirname.replace('/routes/user','');
 

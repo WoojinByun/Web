@@ -91,6 +91,11 @@ router.post('/', function(req, res, next) {
     }
   });
 });
+router.post('/attend', function(req, res, next) {
+  console.log('----------------------0-------------------0-----------------------0--------------------');
+  console.log(req.body);
+  console.log(req.body.id);
+});
 router.get('/', function(req, res, next) {
   display(req, res);
 });
