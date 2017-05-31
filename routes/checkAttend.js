@@ -16,6 +16,14 @@ router.use(function(req, res, next){
   params = sessioning.getSession(req);
   errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
+router.get('/', function(req, res, next) {
+  display(req, res);
+});
+
+router.post('/attend', function(req, res, next) {
+  console.log(req.body);
+  console.log(req.body.usrNums);
+});
 
 router.post('/', function(req, res, next) {
 
@@ -90,12 +98,6 @@ router.post('/', function(req, res, next) {
       });
     }
   });
-});
-router.post('/attend', function(req, res, next) {
-  console.log(req.body.usrNums);
-});
-router.get('/', function(req, res, next) {
-  display(req, res);
 });
 
 function display(req, res){

@@ -12,9 +12,6 @@ var rootDir = __dirname.replace('/routes','');
 
 ////////////////////for DEMO!!!!!!!!!!!!!!
 router.post('/attend', function(req, res, next) {
-  console.log("!!!!!!!!!!!!");
-  console.log(req);
-  console.log(req.body);
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
     if (err) {
@@ -36,7 +33,7 @@ router.post('/attend', function(req, res, next) {
           console.error(err);
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
-          res.send(1);
+          res.send('1');
         }
       });
     }
