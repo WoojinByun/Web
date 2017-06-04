@@ -24,6 +24,7 @@ fs.readFile('./query/query.xml','utf8', function(error, data) {
         global.getSchedule_query = result.query.getSchedule;
         global.getStuAttend_query = result.query.getStuAttend;
         global.getUsersInfo_query = result.query.getUsersInfo;
+        global.doAttend_query = result.query.doAttend;
       }
     });
   }
@@ -57,6 +58,31 @@ function doLogin(req, res){
       else {
         res.render('login', { title: 'Login', state: 'wrong' });
       }
+    }
+  });
+}
+
+function doAttend(datas){
+  var stuNumStr = "";
+  for(var i=0; i<datas.usrNums.length; i++){
+    if(i != 0)
+      stuNumStr += ',';
+    stuNumStr += datas.usrNums[i];
+  }
+
+  var query = util.format(global.doAttend_query ,
+                          datas.couNum,
+                          datas.order,
+                          datas.time,
+                          stuNumStr);
+  console.log(query);
+  db.query(query, function (error, result, field) {
+    if (error) {
+      res.writeHead(500).res.end();
+    }
+    else {
+      console.log('-0=0-=98790-=9-87657890-80765457890-' + result);
+      console.log('-0=0-=98790-=9-87657890-80765457890-' + result[0]);
     }
   });
 }
@@ -158,4 +184,5 @@ function getUsersInfo(usrNums){
 exports.doLogin = doLogin;
 exports.getSchedule = getSchedule;
 exports.getStuAttend = getStuAttend;
+exports.doAttend = doAttend;
 exports.getUsersInfo = getUsersInfo;

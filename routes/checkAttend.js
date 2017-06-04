@@ -21,19 +21,19 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/attend', function(req, res, next) {
-  console.log(req.body);
-  console.log(req.body.usrNums);
 });
 
 router.post('/', function(req, res, next) {
-
+  var datas = {};
   var form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
     if (err) {
       console.error(err);
     }
+    datas = fields;
   });
   form.on('end', function(fields, files) {
+    console.log('datas = ', datas);
     for (var i=0; i < this.openedFiles.length; i++) {
       var tempPath = this.openedFiles[i].path;
       var fileName = this.openedFiles[i].name;
@@ -57,9 +57,9 @@ router.post('/', function(req, res, next) {
           console.log(imgs);
           imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
           console.log(imgs);
-          var usrNums = [];
+          datas.usrNums = "";
           for(var j=0; j<imgs.length; j++){
-            usrNums.push(imgs[j].usrNum);
+            datas.usrNums.push(imgs[j].usrNum);
           }
           if(isNoPerson){
             params.users = imgs;
@@ -73,7 +73,8 @@ router.post('/', function(req, res, next) {
             res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
             return;
           }
-          var userEvt = dbmodule.getUsersInfo(usrNums);
+          dbmodule.doAttend(datas);
+          var userEvt = dbmodule.getUsersInfo(datas.usrNums);
           userEvt.on('end', function(error, users){
             if (error) {
               res.writeHead(500);
@@ -88,7 +89,7 @@ router.post('/', function(req, res, next) {
             console.log('user : ', params.user);
             console.log('courses : ', params.courses);
             console.log('users : ', params.users);
-            if(!(params.courses && params.users)){
+            if(!(params.users)){
               return;
             }
             res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});

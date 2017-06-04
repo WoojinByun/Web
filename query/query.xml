@@ -3,6 +3,15 @@
   <doLogin>
     SELECT usr_num, name, auth_type FROM user WHERE id = '%s' AND pw = '%s'
   </doLogin>
+
+  <doAttend>
+    UPDATE attend ATT
+    SET ATT.attend_state = 1
+    WHERE ATT.cou_num = %s
+    AND ATT.order = %s
+    AND ATT.time = '%s'
+    AND stu_num IN (%s);
+  </doAttend>
   <getStuInfo>
     SELECT USR.usr_num, USR.name, USR.auth_type, COU.cou_num, COU.cou_name, PRO.name pro_name
   	FROM user USR, course COU, study STD, user PRO
