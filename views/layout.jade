@@ -47,10 +47,20 @@ html(lang='en')
                 a(href='#')
                   i.fa.fa-envelope
                   |  출결 변경 신청
-              li
-                a(href='/checkAttend')
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
                   i.fa.fa-envelope
                   |  출석체크
+                  b.caret
+                ul.dropdown-menu.message-dropdown
+                  li.navbar-inverse
+                    a(href='/checkAttend')
+                      i.fa.fa-file-photo-o.chkAttMenu
+                        h4.txt-center.chkAttStr 사진
+                  li.navbar-inverse
+                    a(href='/classAttend')
+                      i.fa.fa-camera.chkAttMenu
+                        h4.txt-center.chkAttStr 웹캠
               li
                 a(href='/QR_CODE.png')
                   i.fa.fa-envelope
