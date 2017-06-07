@@ -10,17 +10,12 @@ var errCtl = errorControl.errCtl;
 var params = {};
 var rootDir = __dirname.replace('/routes','');
 
-////////////////////for DEMO!!!!!!!!!!!!!!
-
 router.use(function(req, res, next){
   params = sessioning.getSession(req);
   errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
 router.get('/', function(req, res, next) {
   display(req, res);
-});
-
-router.post('/attend', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
@@ -57,7 +52,7 @@ router.post('/', function(req, res, next) {
           console.log(imgs);
           imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
           console.log(imgs);
-          datas.usrNums = "";
+          datas.usrNums = [];
           for(var j=0; j<imgs.length; j++){
             datas.usrNums.push(imgs[j].usrNum);
           }
