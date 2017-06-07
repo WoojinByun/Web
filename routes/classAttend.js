@@ -51,9 +51,9 @@ router.post('/', function(req, res, next) {
   console.log("what the fuck");
   console.log(req);
   console.log(req.body);
-  console.log(req.body.couNum);
-  console.log(req.body.order);
-  console.log(req.body.time);
+  console.log(req.body.timeData.couNum);
+  console.log(req.body.timeData.order);
+  console.log(req.body.timeData.time);
   form.parse(req, function(err, fields, files) {
     if (err) {
       console.error(err);
