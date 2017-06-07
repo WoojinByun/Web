@@ -38,7 +38,10 @@ router.post('/', function(req, res, next) {
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
           var discs = getDescriptor(newLoc, newFileName);
-          res.redirect('/register?msg='+'등록이 완료되었습니다.');
+          if(discs > 0)
+            res.redirect('/register?msg='+'등록이 완료되었습니다.');
+          else
+            res.redirect('/register?msg='+'얼굴이 인식되지 않았습니다. 다른 사진을 등록해주시기 바랍니다.');
         }
       });
     }
@@ -82,6 +85,7 @@ function getDescriptor(filePath, fileName){
     shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
   }
   shell.cd(rootDir);
+  return beforeImgs.length - afterImgs.length;
 }
 
 module.exports = router;
