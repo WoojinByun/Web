@@ -55,6 +55,8 @@ router.post('/', function(req, res, next) {
   }
   imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
   datas.usrNums = [];
+  console.log(imgs);
+  console.log(datas);
   for(var j=0; j<imgs.length; j++){
     datas.usrNums.push(imgs[j].usrNum);
   }
