@@ -28,7 +28,7 @@
                               end AS dif
                               FROM   attend ATT2
                               WHERE  ATT2.cou_num = %s
-                              AND ATT2.stu_num = IN (%s)
+                              AND ATT2.stu_num IN (%s)
                               AND ATT2.order = %s
                               AND ATT2.time = '%s') AS p)
     WHERE  ATT.cou_num = %s
