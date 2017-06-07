@@ -47,47 +47,54 @@ router.use(function(req, res, next){
 
 router.post('/', function(req, res, next) {
   var datas = req.body.timeData.split('/');
-
-  datas = {couNum: datas[0], order: datas[1], time: formatDate(datas[2])}
-  console.log(datas);
-  var imgs = getDescriptor(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]);
-  var isNoPerson = false;
-  if(imgs == undefined){
-    res.redirect('/classAttend?msg='+'얼굴 검출에 실패하였습니다.');
-    return;
-  }
-  imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
-  var usrNums = [];
-  console.log(imgs);
-  console.log(datas);
-  for(var j=0; j<imgs.length; j++){
-    usrNums.push(imgs[j].usrNum);
-  }
-  datas.usrNums = usrNums;
-  dbmodule.doAttend(datas);
-
-  var userEvt = dbmodule.getUsersInfo(datas.usrNums);
-  userEvt.on('end', function(error, users){
-    if (error) {
-      console.log(error);
+  datas = {couNum: datas[0], order: datas[1], time: formatDate(datas[2])};
+  var stuNumsEvt = dbmodule.getCourseStuAll(datas.couNum);
+  stuNumsEvt.on('end', function(error, stuNums){
+    if(error) {
+      console.error(error);
       res.writeHead(500);
       res.end();
     }
-    for(var j=0; j<users.length; j++){
-      users[j].imgSrc = imgs[j].imgSrc;
+    var imgs = getDescriptor(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]);
+    var isNoPerson = false;
+    if(imgs == undefined){
+      res.redirect('/classAttend?msg='+'얼굴 검출에 실패하였습니다.');
+      return;
     }
-    params.users = users;
-    var attendTimeEvent = dbmodule.getAttendTimeAll(params.user.usrNum);
-    attendTimeEvent.on('end', function(error, timeDatas){
+    imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
+    var usrNums = [];
+    for(var j=0; j<imgs.length; j++){
+      usrNums.push(imgs[j].usrNum);
+    }
+    datas.usrNums = usrNums;
+    dbmodule.doAttend(datas);
+
+    var userEvt = dbmodule.getUsersInfo(datas.usrNums);
+    userEvt.on('end', function(error, users){
       if (error) {
         console.log(error);
         res.writeHead(500);
         res.end();
       }
-      params.timeDatas = timeDatas;
-      display(req, res);
+      for(var j=0; j<users.length; j++){
+        users[j].imgSrc = imgs[j].imgSrc;
+      }
+      params.users = users;
+      var attendTimeEvent = dbmodule.getAttendTimeAll(params.user.usrNum);
+      attendTimeEvent.on('end', function(error, timeDatas){
+        if (error) {
+          console.log(error);
+          res.writeHead(500);
+          res.end();
+        }
+        params.timeDatas = timeDatas;
+        display(req, res);
+      });
     });
   });
+
+
+
 });
 
 router.get('/', function(req, res, next) {
@@ -139,21 +146,21 @@ function getDescriptor(filePath, fileName){
   }
   shell.cd(rootDir);
   if(attendedImgs.length != 0)
-    return attendedImgs;
+  return attendedImgs;
 }
 
 function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear(),
-        hour = d.getHours(),
-        minute = d.getMinutes();
+  var d = new Date(date),
+  month = '' + (d.getMonth() + 1),
+  day = '' + d.getDate(),
+  year = d.getFullYear(),
+  hour = d.getHours(),
+  minute = d.getMinutes();
 
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
 
-    return [year, month, day].join('-') + " " + [hour,minute].join(':') ;
+  return [year, month, day].join('-') + " " + [hour,minute].join(':') ;
 }
 
 module.exports = router;
