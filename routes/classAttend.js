@@ -47,10 +47,8 @@ router.use(function(req, res, next){
 
 router.post('/', function(req, res, next) {
   var datas = req.body.timeData;
-  console.log(req.body);
-  console.log(req.body.timeData);
-  console.log(datas);
-  var imgs = getDescriptor(rootDir + '/', shell.ls('public/rasp/attTest.*g').stdout.split('\n')[0]);
+  console.log(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').replace('public/rasp/','').stdout.split('\n')[0]);
+  var imgs = getDescriptor(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').replace('public/rasp/','').stdout.split('\n')[0]);
   var isNoPerson = false;
   if(imgs == undefined){
     res.redirect('/classAttend?msg='+'얼굴 검출에 실패하였습니다.');
