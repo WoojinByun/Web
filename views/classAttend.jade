@@ -1,4 +1,6 @@
 extends layout
+block headExtra
+  link(href='/css/classAttend.css', rel='stylesheet')
 block content
   .container-fluid
     // Page Heading
@@ -9,19 +11,20 @@ block content
           small  Check Attendance
     // /.row
     .row
-      .col-lg-offset-2.col-lg-8
+      .col-lg-8.col-lg-offset-2
         .form-group
           form(action='/classAttend', method='post')
             .row
-              #image-preview-div
+              .imgDiv
                 p Latest image:
-                if params.imageUrl
-                  img#preview-img(src=params.imageUrl)
-                else
-                  img#preview-img(src='/img/noimage.jpg')
+                .imgCover
+                  if params.imageUrl
+                    img(src=params.imageUrl)
+                  else
+                    img(src='/img/noimage.jpg')
             .row
               input.form-control(type='text', name='couNum', placeholder='Course Number')
               input.form-control(type='text', name='order', placeholder='Order')
               input.form-control(type='datetime', name='time', placeholder='time, ex)2017-01-01 09:00:00')
-            .row
-              button#upload-button.btn.btn-lg.btn-primary(type='submit') Do Attend!
+            .row.text-center
+              button.btn.btn-lg.btn-primary(type='submit') Do Attend!

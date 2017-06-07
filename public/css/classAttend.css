@@ -1,0 +1,12 @@
+.imgDiv img{
+  width: 100%;
+  display: block;
+}
+.imgCover{
+  background-color: white;
+  background-image: url('/img/refresh.gif') center;
+  cursor: pointer;
+}
+.imgCover:hover img{
+  opacity: 0.5;
+}
