@@ -48,18 +48,13 @@ router.post('/', function(req, res, next) {
 
 });
 router.get('/', function(req, res, next) {
-
   display(req, res);
 });
 
 function display(req, res){
   console.log('user : ', params.user);
   console.log('courses : ', params.courses);
-  getCurrentImage();
-  res.render('checkAttend', { title: 'checkAttend', params: params});
-}
-function getCurrentImage(){
-  var image = {};
-  console.log(shell.ls('public/rasp/attTest.*g').stdout.replace('public/','').split('\n')[0]);
+  params.imageUrl = shell.ls('public/rasp/attTest.*g').stdout.replace('public','').split('\n')[0];
+  res.render('classAttend', { title: 'classAttend', params: params});
 }
 module.exports = router;
