@@ -28,11 +28,17 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  var datas = req.body.timeData.split('/');
-  datas = {couNum: datas[0], order: datas[1], time: formatDate(datas[2])};
   var form = new formidable.IncomingForm();
+  var datas = {};
+  form.parse(req, function(err, fields, files) {
+    if (err) {
+      console.error(err);
+    }
+    datas = fields.timeData.split('/');
+    datas = {couNum: datas[0], order: datas[1], time: formatDate(datas[2])};
+  });
   form.on('end', function(fields, files) {
-    console.log('datas = ', datas);
+    // console.log('datas = ', datas);
     for (var i=0; i < this.openedFiles.length; i++) {
       var tempPath = this.openedFiles[i].path;
       var fileName = this.openedFiles[i].name;
@@ -41,12 +47,12 @@ router.post('/', function(req, res, next) {
       var newLoc = 'public/attChk/temp/';
 
       var newFileName = 'attTest.' + fileExt;
-      console.log(tempPath, newLoc + newFileName);
+      // console.log(tempPath, newLoc + newFileName);
       fs.copy(tempPath, newLoc + newFileName, function(err) {
         if (err) {
           console.error(err);
         } else {
-          console.log(newLoc + newFileName + ' has been saved!');
+          // console.log(newLoc + newFileName + ' has been saved!');
           params.concentRate = getHeadTrack(rootDir + '/' + newLoc, newFileName);
           var stuNumsEvt = dbmodule.getCourseStuAll(datas.couNum);
           stuNumsEvt.on('end', function(error, stuNums){
@@ -60,9 +66,9 @@ router.post('/', function(req, res, next) {
               imgs = [{imgSrc:'/img/noimage.jpg', id: '-', name: '검출된 사람이 없습니다.'}];
               isNoPerson = true;
             }
-            console.log(imgs);
+            // console.log(imgs);
             imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
-            console.log(imgs);
+            // console.log(imgs);
             datas.usrNums = [];
             for(var j=0; j<imgs.length; j++){
               datas.usrNums.push(imgs[j].usrNum);
