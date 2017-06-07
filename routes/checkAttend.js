@@ -15,18 +15,22 @@ router.use(function(req, res, next){
   errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
 router.get('/', function(req, res, next) {
-  display(req, res);
+  var attendTimeEvent = dbmodule.getAttendTimeAll(params.user.usrNum);
+  attendTimeEvent.on('end', function(error, timeDatas){
+    if (error) {
+      console.log(error);
+      res.writeHead(500);
+      res.end();
+    }
+    params.timeDatas = timeDatas;
+    display(req, res);
+  });
 });
 
 router.post('/', function(req, res, next) {
-  var datas = {};
+  var datas = req.body.timeData.split('/');
+  datas = {couNum: datas[0], order: datas[1], time: formatDate(datas[2])};
   var form = new formidable.IncomingForm();
-  form.parse(req, function(err, fields, files) {
-    if (err) {
-      console.error(err);
-    }
-    datas = fields;
-  });
   form.on('end', function(fields, files) {
     console.log('datas = ', datas);
     for (var i=0; i < this.openedFiles.length; i++) {
@@ -44,61 +48,60 @@ router.post('/', function(req, res, next) {
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
           params.concentRate = getHeadTrack(rootDir + '/' + newLoc, newFileName);
-          // console.log("-------------------" + datas.CouNum);
           var stuNumsEvt = dbmodule.getCourseStuAll(datas.couNum);
           stuNumsEvt.on('end', function(error, stuNums){
             if(error) {
               res.writeHead(500);
               res.end();
             }
-          var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName, stuNums.toString().replace(/,/g, ' '));
-          var isNoPerson = false;
-          if(imgs == undefined){
-            imgs = [{imgSrc:'/img/noimage.jpg', id: '-', name: '검출된 사람이 없습니다.'}];
-            isNoPerson = true;
-          }
-          console.log(imgs);
-          imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
-          console.log(imgs);
-          datas.usrNums = [];
-          for(var j=0; j<imgs.length; j++){
-            datas.usrNums.push(imgs[j].usrNum);
-          }
-          if(isNoPerson){
-            params.users = imgs;
+            var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName, stuNums.toString().replace(/,/g, ' '));
+            var isNoPerson = false;
+            if(imgs == undefined){
+              imgs = [{imgSrc:'/img/noimage.jpg', id: '-', name: '검출된 사람이 없습니다.'}];
+              isNoPerson = true;
+            }
+            console.log(imgs);
+            imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
+            console.log(imgs);
+            datas.usrNums = [];
+            for(var j=0; j<imgs.length; j++){
+              datas.usrNums.push(imgs[j].usrNum);
+            }
+            if(isNoPerson){
+              params.users = imgs;
 
-            console.log('user : ', params.user);
-            console.log('courses : ', params.courses);
-            console.log('users : ', params.users);
-            if(!params.users){
+              console.log('user : ', params.user);
+              console.log('courses : ', params.courses);
+              console.log('users : ', params.users);
+              if(!params.users){
+                return;
+              }
+              res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
               return;
             }
-            res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
-            return;
-          }
-          dbmodule.doAttend(datas);
-          var userEvt = dbmodule.getUsersInfo(datas.usrNums);
-          userEvt.on('end', function(error, users){
-            if (error) {
-              res.writeHead(500);
-              res.end();
-            }
+            dbmodule.doAttend(datas);
+            var userEvt = dbmodule.getUsersInfo(datas.usrNums);
+            userEvt.on('end', function(error, users){
+              if (error) {
+                res.writeHead(500);
+                res.end();
+              }
 
-            for(var j=0; j<users.length; j++){
-              users[j].imgSrc = imgs[j].imgSrc;
-            }
-            params.users = users;
+              for(var j=0; j<users.length; j++){
+                users[j].imgSrc = imgs[j].imgSrc;
+              }
+              params.users = users;
 
-            console.log('user : ', params.user);
-            console.log('courses : ', params.courses);
-            console.log('users : ', params.users);
-            if(!(params.users)){
-              return;
-            }
-            res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
+              console.log('user : ', params.user);
+              console.log('courses : ', params.courses);
+              console.log('users : ', params.users);
+              if(!(params.users)){
+                return;
+              }
+              res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
 
+            });
           });
-        });
         }
       });
     }
@@ -108,6 +111,10 @@ router.post('/', function(req, res, next) {
 function display(req, res){
   console.log('user : ', params.user);
   console.log('courses : ', params.courses);
+  // console.log('timeDatas : ', params.timeDatas);
+  if(!(params.timeDatas)){
+    return;
+  }
   res.render('checkAttend', { title: 'checkAttend', params: params});
 }
 
@@ -145,6 +152,22 @@ function getHeadTrack(filePath, fileName){
   var concentRate = shell.exec('./head_track ' + filePath + fileName);
   shell.cd(rootDir);
   return concentRate;
+}
+
+function formatDate(date) {
+  var d = new Date(date),
+  month = '' + (d.getMonth() + 1),
+  day = '' + d.getDate(),
+  year = d.getFullYear(),
+  hour = '' + d.getHours(),
+  minute = '' + d.getMinutes();
+
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+  if (hour.length < 2) hour = '0' + hour;
+  if (minute.length < 2) minute = '0' + minute;
+
+  return [year, month, day].join('-') + " " + [hour,minute].join(':') ;
 }
 
 module.exports = router;
