@@ -47,6 +47,8 @@ router.use(function(req, res, next){
 
 router.post('/', function(req, res, next) {
   var datas = req.body.timeData;
+  console.log(req.body.timeData);
+  console.log(datas);
   var imgs = getDescriptor(rootDir + '/', shell.ls('public/rasp/attTest.*g').stdout.split('\n')[0]);
   var isNoPerson = false;
   if(imgs == undefined){
@@ -116,7 +118,6 @@ function getDescriptor(filePath, fileName){
   var beforeImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   shell.cd(rootDir + '/../face_recognition/src/build/');
   shell.exec('./crop ' + userDir + ' ' + filePath + fileName);
-  shell.rm(filePath + fileName);
   shell.cd(userDir);
   var afterImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   afterImgs = afterImgs.filter(function(e) {
