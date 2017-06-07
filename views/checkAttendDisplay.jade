@@ -26,7 +26,7 @@ block content
           input.form-control(type='text', name='couNum', placeholder='Course Number')
           input.form-control(type='text', name='order', placeholder='Order')
           input.form-control(type='datetime', name='time', placeholder='time, ex)2017-01-01 09:00:00')
-    p.cRate 집중도 : #{user.concentRate} 
+    p.cRate 집중도 : #{params.concentRate} 
     each user in params.users
       .row
         .userDiv.col-lg-8.col-lg-offset-2
