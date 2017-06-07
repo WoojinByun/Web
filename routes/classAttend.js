@@ -47,7 +47,8 @@ router.use(function(req, res, next){
 
 router.post('/', function(req, res, next) {
   var datas = req.body.timeData.split('/');
-  datas = {couNum: datas[0], order: datas[1], time: datas[2]}
+
+  datas = {couNum: datas[0], order: datas[1], time: formatDate(datas[2])}
   console.log(datas);
   var imgs = getDescriptor(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]);
   var isNoPerson = false;
@@ -139,6 +140,20 @@ function getDescriptor(filePath, fileName){
   shell.cd(rootDir);
   if(attendedImgs.length != 0)
     return attendedImgs;
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear(),
+        hour = d.getHours(),
+        minute = d.getMinutes();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-') + " " + [hour,minute].join(':') ;
 }
 
 module.exports = router;
