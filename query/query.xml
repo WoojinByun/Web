@@ -5,7 +5,7 @@
   </doLogin>
   <doAttend>
     UPDATE attend ATT
-    SET    ATT.attend_state = (SELECT dif
+    SET    ATT.attend_state = (SELECT distinct dif
                                FROM   (SELECT CASE
                                                 WHEN Subtime(Time(ATT2.time),
                                                      (SELECT Time(c.start_time)
@@ -27,10 +27,10 @@
                               ELSE 1
                               end AS dif
                               FROM   attend ATT2
-                              WHERE  ATT2.cou_num = 4
-                              AND ATT2.stu_num = 37
-                              AND ATT2.order = 2
-                              AND ATT2.time = '2017-03-06 16:30:00') AS p)
+                              WHERE  ATT2.cou_num = %s
+                              AND ATT2.stu_num = IN (%s)
+                              AND ATT2.order = %s
+                              AND ATT2.time = '%s') AS p)
     WHERE  ATT.cou_num = %s
            AND ATT.stu_num IN (%s)
            AND ATT.order = %s

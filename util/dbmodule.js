@@ -79,6 +79,10 @@ function doAttend(datas){
                           datas.couNum,
                           stuNumStr,
                           datas.order,
+                          datas.time,
+                          datas.couNum,
+                          stuNumStr,
+                          datas.order,
                           datas.time
                           );
   console.log(query);
