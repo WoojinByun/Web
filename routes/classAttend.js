@@ -49,6 +49,11 @@ router.post('/', function(req, res, next) {
   var datas = {};
   var form = new formidable.IncomingForm();
   console.log("what the fuck");
+  console.log(req);
+  console.log(req.body);
+  console.log(req.body.couNum);
+  console.log(req.body.order);
+  console.log(req.body.time);
   form.parse(req, function(err, fields, files) {
     if (err) {
       console.error(err);
