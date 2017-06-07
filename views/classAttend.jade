@@ -27,7 +27,7 @@ block content
               select.form-control(name='timeData')
                 if params.timeDatas
                   each timeData in params.timeDatas
-                    option(value={couNum: timeData.couNum, order: timeData.order, time: timeData.time}) #{timeData.timeString}
+                    option(value=timeData.couNum + "/" + timeData.order + "/" + timeData.time) #{timeData.timeString}
             .row.text-center
               button.btn.btn-lg.btn-primary(type='submit') Do Attend!
     if params.users
