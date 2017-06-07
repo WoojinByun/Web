@@ -92,4 +92,11 @@
     WHERE stu_num = %s
     AND COU.cou_num = ATT.cou_num;
   </getAttendTimeAll>
+  <getCourseStuAll>
+    SELECT USR.usr_num
+    FROM user USR, course COU, study STD
+    WHERE COU.cou_num = %s
+    AND STD.cou_num = COU.cou_num
+    AND STD.stu_num = USR.usr_num
+  </getCourseStuAll>
 </query>
