@@ -47,6 +47,7 @@ router.use(function(req, res, next){
 
 router.post('/', function(req, res, next) {
   var datas = req.body.timeData;
+  console.log(req.body);
   console.log(req.body.timeData);
   console.log(datas);
   var imgs = getDescriptor(rootDir + '/', shell.ls('public/rasp/attTest.*g').stdout.split('\n')[0]);
@@ -56,12 +57,13 @@ router.post('/', function(req, res, next) {
     return;
   }
   imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
-  datas.usrNums = [];
+  var usrNums = [];
   console.log(imgs);
   console.log(datas);
   for(var j=0; j<imgs.length; j++){
-    datas.usrNums.push(imgs[j].usrNum);
+    usrNums.push(imgs[j].usrNum);
   }
+  datas.usrNums = usrNums;
   dbmodule.doAttend(datas);
 
   var userEvt = dbmodule.getUsersInfo(datas.usrNums);
