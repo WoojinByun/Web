@@ -84,8 +84,7 @@ function doAttend(datas){
   console.log(query);
   db.query(query, function (error, result, field) {
     if (error) {
-      res.writeHead(500);
-      res.end();
+      console.log(error);
     }
     else {
       console.log('-0=0-=98790-=9-87657890-80765457890-' + result);
