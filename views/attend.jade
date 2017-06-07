@@ -26,7 +26,9 @@ block content
                 - var mm = params.attends[i].date.getMonth()+1; 
                 - if(dd<10) dd='0'+dd;
                 - if(mm<10) mm='0'+mm;
-                - var isAttend = params.attends[i].attCnt >= 1;
+                - var isAttend = params.attends[i].attCnt >= 1000;
+                - var isLate = params.attends[i].attCnt >= 100;
+                - var isAbsense = params.attends[i].attCnt >= 1;
                 tr
                   td
                     | #{i+1}
@@ -36,6 +38,9 @@ block content
                     - count++;
                     td.success
                       i.fa.fa-fw.fa-check
+                  else if isLate
+                    td.late
+                      i.fa.fa-fw.fa-warning
                   else
                     td.absence
                       i.fa.fa-fw.fa-remove
