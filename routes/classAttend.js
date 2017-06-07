@@ -47,6 +47,7 @@ router.use(function(req, res, next){
 
 router.post('/', function(req, res, next) {
   var datas = req.body.timeData.split('/');
+  datas = {couNum: datas[0], order: datas[1], time: datas[2]}
   console.log(datas);
   var imgs = getDescriptor(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]);
   var isNoPerson = false;
