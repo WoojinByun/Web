@@ -55,7 +55,9 @@ router.post('/', function(req, res, next) {
       res.writeHead(500);
       res.end();
     }
-    var imgs = getDescriptor(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]);
+    var imgs = getDescriptor(rootDir + '/public/rasp/',
+                             shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]
+                             stuNums.toString().replace(/,/g, ' '));
     var isNoPerson = false;
     if(imgs == undefined){
       res.redirect('/classAttend?msg='+'얼굴 검출에 실패하였습니다.');
