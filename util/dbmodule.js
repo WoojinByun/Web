@@ -199,7 +199,6 @@ function getAttendTimeAll(usrNum){
   db.query(query, function (error, result, field) {
     var timeDatas = [];
     for(var i=0; i<result.length; i++){
-      console.log(result[i][result[i].time_string.indexOf('(')]+1);
       var weekdayIdx = result[i].time_string[result[i].time_string.indexOf('(')+1];
       var timeData = {
         couNum:  result[i].cou_num,
