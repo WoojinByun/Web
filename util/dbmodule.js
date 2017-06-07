@@ -192,17 +192,19 @@ function getUsersInfo(usrNums){
 }
 
 function getAttendTimeAll(usrNum){
+  var weekdayData = ['','월','화','수','목','금','토','일'];
   var query = util.format( global.getAttendTimeAll_query , usrNum);
   console.log(query);
   var evt = new EventEmitter();
   db.query(query, function (error, result, field) {
     var timeDatas = [];
     for(var i=0; i<result.length; i++){
+      var weekdayChar = result[i][result[i].time_string.indexOf('(')+1];
       var timeData = {
         couNum:  result[i].cou_num,
         order:  result[i].order,
         time:  result[i].time,
-        timeString:  result[i].time_string
+        timeString:  result[i].time_string.replace('('+weekdayChar+')', '('+weekdayData[weekdayChar]+')')
       }
       timeDatas.push(timeData);
     }
