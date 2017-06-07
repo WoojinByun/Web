@@ -3,7 +3,6 @@
   <doLogin>
     SELECT usr_num, name, auth_type FROM user WHERE id = '%s' AND pw = '%s'
   </doLogin>
-
   <doAttend>
     UPDATE attend att
     SET    ATT.attend_state = (SELECT dif
@@ -15,7 +14,7 @@
                                                 c.cou_num = ATT2.cou_num
                                                 AND c.weekday =
                               Weekday(ATT2.time) + 1
-                              LIMIT  %d, %d)) < Time('00:30:00') THEN 
+                              LIMIT  %d, %d)) &lt; Time('00:30:00') THEN 
                               1000
                               WHEN Subtime(Time(ATT2.time),
                                    (SELECT Time(c.start_time)
@@ -23,7 +22,7 @@
                               WHERE  c.cou_num = ATT2.cou_num
                               AND c.weekday =
                               Weekday(ATT2.time) + 1
-                              LIMIT  %d, %d)) < Time('01:00:00') THEN 
+                              LIMIT  %d, %d)) &lt; Time('01:00:00') THEN 
                               100
                               ELSE 1
                               end AS dif
@@ -32,7 +31,7 @@
                               AND ATT2.stu_num = 37
                               AND ATT2.order = 2
                               AND ATT2.time = '2017-03-06 16:30:00') AS p)
-    WHERE  ATT.cou_num = %s 
+    WHERE  ATT.cou_num = %s
            AND ATT.stu_num IN (%s)
            AND ATT.order = %s
            AND ATT.time = '%s'
