@@ -44,7 +44,14 @@ router.post('/', function(req, res, next) {
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
           params.concentRate = getHeadTrack(rootDir + '/' + newLoc, newFileName);
-          var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName);
+          // console.log("-------------------" + datas.CouNum);
+          var stuNumsEvt = dbmodule.getCourseStuAll(datas.couNum);
+          stuNumsEvt.on('end', function(error, stuNums){
+            if(error) {
+              res.writeHead(500);
+              res.end();
+            }
+          var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName, stuNums.toString().replace(/,/g, ' '));
           var isNoPerson = false;
           if(imgs == undefined){
             imgs = [{imgSrc:'/img/noimage.jpg', id: '-', name: '검출된 사람이 없습니다.'}];
@@ -91,6 +98,7 @@ router.post('/', function(req, res, next) {
             res.render('checkAttendDisplay', { title: 'checkAttendDisplay', params: params});
 
           });
+        });
         }
       });
     }
@@ -103,7 +111,7 @@ function display(req, res){
   res.render('checkAttend', { title: 'checkAttend', params: params});
 }
 
-function getDescriptor(filePath, fileName){
+function getDescriptor(filePath, fileName, stuNums){
   var userDir = filePath.replace('/temp','')
   var beforeImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   shell.cd(rootDir + '/../face_recognition/src/build/');
@@ -120,8 +128,8 @@ function getDescriptor(filePath, fileName){
     console.log('-----------------' + './extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.cd(rootDir + '/../face_recognition/src/build/');
-    console.log('-----------------' + './check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37 11');
-    var file = shell.exec('./check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37 11').stdout;
+    console.log('-----------------' + './check_attendance ' + afterImgs[i].replace('.png','.txt') + ' ' + stuNums);
+    var file = shell.exec('./check_attendance ' + afterImgs[i].replace('.png','.txt') + ' ' + stuNums).stdout;
     if(file.indexOf('absence') == -1){
       attendedImgs.push({usrNum: file.split('/')[8], imgSrc: afterImgs[i].replace('/home/wj/work/Im_Here/Web/public','')});
     }
@@ -133,7 +141,7 @@ function getDescriptor(filePath, fileName){
 
 function getHeadTrack(filePath, fileName){
   var userDir = filePath.replace('/temp','');
-  shell.cd(rootDir + '/../face_recognition/src/build/');
+  shell.cd(rootDir + '/../face_recognition/src/build/').stdout;
   var concentRate = shell.exec('./head_track ' + filePath + fileName);
   shell.cd(rootDir);
   return concentRate;
