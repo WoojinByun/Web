@@ -8,7 +8,7 @@ block content
       .col-lg-12
         h1.page-header
           | 출석 체크
-          small  Check Attendance 
+          small  Check Attendance
     // /.row
     .row
       .col-lg-offset-2
@@ -22,20 +22,14 @@ block content
           .form-group
             input#file(type='file', name='uploadFile', required='')
           button#upload-button.btn.btn-lg.btn-primary(type='submit', disabled='') Upload image
-    form#doAttend(action='/checkAttend/attend', method='post')
+          .row
+          input.form-control(type='text', name='couNum', placeholder='Course Number')
+          input.form-control(type='text', name='order', placeholder='Order')
+          input.form-control(type='datetime', name='time', placeholder='time, ex)2017-01-01 09:00:00')
+    each user in params.users
       .row
-        input.form-control(type='text', name='couNum', placeholder='Course Number')
-        input.form-control(type='text', name='order', placeholder='Order')
-        input.form-control(type='datetime', name='time', placeholder='time, ex)2017-01-01 09:00:00')
-      each user in params.users
-        .row
-          .userDiv.col-lg-8.col-lg-offset-2
-            img.userPic(src='#{user.imgSrc}')
-            p.id 학번 : #{user.id}
-            p.name 이름 : #{user.name}
-            div.checkbox
-              label
-                input.form-control(type='checkbox', name='usrNums', value=user.usrNum)
-      .row
-        input.form-control(type='submit')
+        .userDiv.col-lg-8.col-lg-offset-2
+          img.userPic(src='#{user.imgSrc}')
+          p.id 학번 : #{user.id}
+          p.name 이름 : #{user.name}
   script(src='/js/register.js')
