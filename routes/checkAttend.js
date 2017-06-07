@@ -43,6 +43,7 @@ router.post('/', function(req, res, next) {
           console.error(err);
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
+          params.concentRate = getHeadTrack(rootDir + '/' + newLoc, newFileName);
           var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName);
           var isNoPerson = false;
           if(imgs == undefined){
@@ -128,6 +129,14 @@ function getDescriptor(filePath, fileName){
   shell.cd(rootDir);
   if(attendedImgs.length != 0)
     return attendedImgs;
+}
+
+function getHeadTrack(filePath, fileName){
+  var userDir = filePath.replace('/temp','');
+  shell.cd(rootDir + '/../face_recognition/src/build/');
+  var concentRate = shell.exec('./head_track ' + filePath + fileName);
+  shell.cd(rootDir);
+  return concentRate;
 }
 
 module.exports = router;
