@@ -122,7 +122,7 @@ function display(req, res){
   res.render('classAttend', { title: 'classAttend', params: params});
 }
 
-function getDescriptor(filePath, fileName){
+function getDescriptor(filePath, fileName, stuNums){
   var userDir = filePath.replace('/temp','')
   var beforeImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   shell.cd(rootDir + '/../face_recognition/src/build/');
@@ -138,15 +138,15 @@ function getDescriptor(filePath, fileName){
     console.log('-----------------' + './extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
     shell.cd(rootDir + '/../face_recognition/src/build/');
-    console.log('-----------------' + './check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37 11');
-    var file = shell.exec('./check_attendance ' + afterImgs[i].replace('.png','.txt') + ' 34 35 37 11').stdout;
+    console.log('-----------------' + './check_attendance ' + afterImgs[i].replace('.png','.txt') + ' ' + stuNums);
+    var file = shell.exec('./check_attendance ' + afterImgs[i].replace('.png','.txt') + ' ' + stuNums).stdout;
     if(file.indexOf('absence') == -1){
       attendedImgs.push({usrNum: file.split('/')[8], imgSrc: afterImgs[i].replace('/home/wj/work/Im_Here/Web/public','')});
     }
   }
   shell.cd(rootDir);
   if(attendedImgs.length != 0)
-  return attendedImgs;
+    return attendedImgs;
 }
 
 function formatDate(date) {
