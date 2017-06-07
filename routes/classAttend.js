@@ -46,44 +46,52 @@ router.use(function(req, res, next){
 });
 
 router.post('/', function(req, res, next) {
-  var datas = req.body.timeData;
-  var imgs = getDescriptor(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]);
-  var isNoPerson = false;
-  if(imgs == undefined){
-    res.redirect('/classAttend?msg='+'얼굴 검출에 실패하였습니다.');
-    return;
-  }
-  imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
-  var usrNums = [];
-  console.log(imgs);
-  console.log(datas);
-  for(var j=0; j<imgs.length; j++){
-    usrNums.push(imgs[j].usrNum);
-  }
-  datas.usrNums = usrNums;
-  console.log(datas);
-  dbmodule.doAttend(datas);
+  var datas = {};
+  var form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+    if (err) {
+      console.error(err);
+    }
+    console.log(fields);
+    datas = fields;
+    var imgs = getDescriptor(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]);
+    var isNoPerson = false;
+    if(imgs == undefined){
+      res.redirect('/classAttend?msg='+'얼굴 검출에 실패하였습니다.');
+      return;
+    }
+    imgs.sort(function compareNumbers(a, b) {return parseInt(a.usrNum) - parseInt(b.usrNum);});
+    var usrNums = [];
+    console.log(imgs);
+    console.log(datas);
+    for(var j=0; j<imgs.length; j++){
+      usrNums.push(imgs[j].usrNum);
+    }
+    datas.usrNums = usrNums;
+    console.log(datas);
+    dbmodule.doAttend(datas);
 
-  var userEvt = dbmodule.getUsersInfo(datas.usrNums);
-  userEvt.on('end', function(error, users){
-    if (error) {
-      console.log(error);
-      res.writeHead(500);
-      res.end();
-    }
-    for(var j=0; j<users.length; j++){
-      users[j].imgSrc = imgs[j].imgSrc;
-    }
-    params.users = users;
-    var attendTimeEvent = dbmodule.getAttendTimeAll(params.user.usrNum);
-    attendTimeEvent.on('end', function(error, timeDatas){
+    var userEvt = dbmodule.getUsersInfo(datas.usrNums);
+    userEvt.on('end', function(error, users){
       if (error) {
         console.log(error);
         res.writeHead(500);
         res.end();
       }
-      params.timeDatas = timeDatas;
-      display(req, res);
+      for(var j=0; j<users.length; j++){
+        users[j].imgSrc = imgs[j].imgSrc;
+      }
+      params.users = users;
+      var attendTimeEvent = dbmodule.getAttendTimeAll(params.user.usrNum);
+      attendTimeEvent.on('end', function(error, timeDatas){
+        if (error) {
+          console.log(error);
+          res.writeHead(500);
+          res.end();
+        }
+        params.timeDatas = timeDatas;
+        display(req, res);
+      });
     });
   });
 });
