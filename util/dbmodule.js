@@ -199,12 +199,13 @@ function getAttendTimeAll(usrNum){
   db.query(query, function (error, result, field) {
     var timeDatas = [];
     for(var i=0; i<result.length; i++){
-      var weekdayChar = result[i][result[i].time_string.indexOf('(')+1];
+      console.log(result[i][result[i].time_string.indexOf('(')]+1);
+      var weekdayIdx = result[i].time_string[result[i].time_string.indexOf('(')+1];
       var timeData = {
         couNum:  result[i].cou_num,
         order:  result[i].order,
         time:  result[i].time,
-        timeString:  result[i].time_string.replace('('+weekdayChar+')', '('+weekdayData[weekdayChar]+')')
+        timeString:  result[i].time_string.replace('('+weekdayIdx+')', '('+weekdayData[weekdayIdx]+')')
       }
       timeDatas.push(timeData);
     }

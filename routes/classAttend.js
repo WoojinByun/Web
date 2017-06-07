@@ -100,7 +100,7 @@ router.get('/', function(req, res, next) {
 function display(req, res){
   console.log('user : ', params.user);
   console.log('courses : ', params.courses);
-  console.log('timeDatas : ', params.timeDatas);
+  // console.log('timeDatas : ', params.timeDatas);
   console.log('users : ', params.users);
   if(!(params.timeDatas)){
     return;
