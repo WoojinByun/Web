@@ -26,6 +26,7 @@ fs.readFile('./query/query.xml','utf8', function(error, data) {
         global.getUsersInfo_query = result.query.getUsersInfo;
         global.doAttend_query = result.query.doAttend;
         global.getAttendTimeAll_query = result.query.getAttendTimeAll;
+        global.getCourseStuAll_query = result.query.getCourseStuAll;
       }
     });
   }
@@ -213,9 +214,24 @@ function getAttendTimeAll(usrNum){
   return evt;
 }
 
+function getCourseStuAll(courseNum){
+  var query = util.format( global.getCourseStuAll_query, courseNum);
+  console.log(query);
+  var evt = new EventEmitter();
+  db.query(query, function (error, result, field) {
+    var stuNums = [];
+    for(var i=0; i<result.length; i++){
+        stuNums.push(result[i].usr_num);
+    }
+    evt.emit('end', error, stuNums)
+  });
+  return evt;
+}
+
 exports.doLogin = doLogin;
 exports.getSchedule = getSchedule;
 exports.getStuAttend = getStuAttend;
 exports.doAttend = doAttend;
 exports.getUsersInfo = getUsersInfo;
 exports.getAttendTimeAll = getAttendTimeAll;
+exports.getCourseStuAll = getCourseStuAll;

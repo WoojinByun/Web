@@ -77,6 +77,7 @@ function getDescriptor(filePath, fileName){
   shell.rm(filePath+fileName);
   shell.cd(userDir);
   var afterImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
+  var detImgs = afterImgs.length - beforeImgs.length;
   afterImgs = afterImgs.filter(function(e) {
     return beforeImgs.indexOf(e) < 0;
   });
@@ -85,7 +86,7 @@ function getDescriptor(filePath, fileName){
     shell.exec('./extract_descriptor ' + userDir + ' ' + afterImgs[i]);
   }
   shell.cd(rootDir);
-  return beforeImgs.length - afterImgs.length;
+  return detImgs;
 }
 
 module.exports = router;
