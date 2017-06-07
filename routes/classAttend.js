@@ -52,6 +52,7 @@ router.post('/', function(req, res, next) {
     if (err) {
       console.error(err);
     }
+    console.log("!!!!!!!!!!!!!!!!!!!!!!");
     console.log(fields);
     datas = fields;
     var imgs = getDescriptor(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]);
