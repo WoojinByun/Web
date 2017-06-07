@@ -56,7 +56,7 @@ router.post('/', function(req, res, next) {
       res.end();
     }
     var imgs = getDescriptor(rootDir + '/public/rasp/',
-                             shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]
+                             shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0],
                              stuNums.toString().replace(/,/g, ' '));
     var isNoPerson = false;
     if(imgs == undefined){
