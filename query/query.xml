@@ -87,7 +87,7 @@
     WHERE usr_num IN (%s)
   </getUsersInfo>
   <getAttendTimeAll>
-    SELECT ATT.cou_num, ATT.order, ATT.time, CONCAT(COU.cou_name, ' - ', DATE_FORMAT(ATT.time, '%Y년 %m월 %d일(%w) %H시 %i분')) time_string
+    SELECT ATT.cou_num, ATT.order, ATT.time, CONCAT(COU.cou_name, ' - ', DATE_FORMAT(ATT.time, '%%Y년 %%m월 %%d일(%%w) %%H시 %%i분')) time_string
     FROM attend ATT, course COU
     WHERE stu_num = %s
     AND COU.cou_num = ATT.cou_num;

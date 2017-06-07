@@ -192,7 +192,7 @@ function getUsersInfo(usrNums){
 }
 
 function getAttendTimeAll(usrNum){
-  var query = util.format( global.getAttendTimeAll_query , ""+usrNum);
+  var query = util.format( global.getAttendTimeAll_query , usrNum);
   console.log(query);
   var evt = new EventEmitter();
   db.query(query, function (error, result, field) {
