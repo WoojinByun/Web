@@ -25,6 +25,7 @@ fs.readFile('./query/query.xml','utf8', function(error, data) {
         global.getStuAttend_query = result.query.getStuAttend;
         global.getUsersInfo_query = result.query.getUsersInfo;
         global.doAttend_query = result.query.doAttend;
+        global.getAttendTimeAll_query = result.query.getAttendTimeAll;
       }
     });
   }
@@ -71,10 +72,15 @@ function doAttend(datas){
   }
 
   var query = util.format(global.doAttend_query ,
-                          datas.couNum,
+                          datas.order-1,
                           datas.order,
-                          datas.time,
-                          stuNumStr);
+                          datas.order-1,
+                          datas.order,
+                          datas.couNum,
+                          stuNumStr,
+                          datas.order,
+                          datas.time
+                          );
   console.log(query);
   db.query(query, function (error, result, field) {
     if (error) {
@@ -182,8 +188,28 @@ function getUsersInfo(usrNums){
   return evt;
 }
 
+function getAttendTimeAll(usrNum){
+  var query = util.format( global.getAttendTimeAll_query , usrNum);
+  console.log(query);
+  var evt = new EventEmitter();
+  db.query(query, function (error, result, field) {
+    var timeDatas = [];
+    for(var i=0; i<result.length; i++){
+      var timeData = {
+        couNum:  result[i].cou_num,
+        time:  result[i].time,
+        timeString:  result[i].time_string
+      }
+      timeDatas.push(timeData);
+    }
+    evt.emit('end', error, timeDatas);
+  });
+  return evt;
+}
+
 exports.doLogin = doLogin;
 exports.getSchedule = getSchedule;
 exports.getStuAttend = getStuAttend;
 exports.doAttend = doAttend;
 exports.getUsersInfo = getUsersInfo;
+exports.getAttendTimeAll = getAttendTimeAll;

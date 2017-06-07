@@ -5,12 +5,37 @@
   </doLogin>
 
   <doAttend>
-    UPDATE attend ATT
-    SET ATT.attend_state = 1
-    WHERE ATT.cou_num = %s
-    AND ATT.order = %s
-    AND ATT.time = '%s'
-    AND stu_num IN (%s);
+    UPDATE attend att
+    SET    ATT.attend_state = (SELECT dif
+                               FROM   (SELECT CASE
+                                                WHEN Subtime(Time(ATT2.time),
+                                                     (SELECT Time(c.start_time)
+                                                      FROM   course_time c
+                                                      WHERE
+                                                c.cou_num = ATT2.cou_num
+                                                AND c.weekday =
+                              Weekday(ATT2.time) + 1
+                              LIMIT  %d, %d)) < Time('00:30:00') THEN 
+                              1000
+                              WHEN Subtime(Time(ATT2.time),
+                                   (SELECT Time(c.start_time)
+                              FROM   course_time c
+                              WHERE  c.cou_num = ATT2.cou_num
+                              AND c.weekday =
+                              Weekday(ATT2.time) + 1
+                              LIMIT  %d, %d)) < Time('01:00:00') THEN 
+                              100
+                              ELSE 1
+                              end AS dif
+                              FROM   attend ATT2
+                              WHERE  ATT2.cou_num = 4
+                              AND ATT2.stu_num = 37
+                              AND ATT2.order = 2
+                              AND ATT2.time = '2017-03-06 16:30:00') AS p)
+    WHERE  ATT.cou_num = %s 
+           AND ATT.stu_num IN (%s)
+           AND ATT.order = %s
+           AND ATT.time = '%s'
   </doAttend>
   <getStuInfo>
     SELECT USR.usr_num, USR.name, USR.auth_type, COU.cou_num, COU.cou_name, PRO.name pro_name
@@ -62,5 +87,10 @@
     FROM user
     WHERE usr_num IN (%s)
   </getUsersInfo>
-
+  <getAttendTimeAll>
+    SELECT ATT.cou_num, ATT.order, ATT.time, CONCAT(COU.cou_name, ' - ', DATE_FORMAT(ATT.time, '%Y년 %m월 %d일(%w) %H시 %i분')) time_string
+    FROM attend ATT, course COU
+    WHERE stu_num = %s
+    AND COU.cou_num = ATT.cou_num;
+  </getAttendTimeAll>
 </query>

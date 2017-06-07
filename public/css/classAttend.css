@@ -4,7 +4,7 @@
 }
 .imgCover{
   background-color: white;
-  background: url('/img/refresh.gif') no-repeat center center fixed;
+  background: url('/img/refresh.gif') no-repeat center;
   cursor: pointer;
 }
 .imgCover:hover img{

@@ -23,9 +23,10 @@ block content
                   else
                     img(src='/img/noimage.jpg')
             .row
-              input.form-control(type='text', name='couNum', placeholder='Course Number')
-              input.form-control(type='text', name='order', placeholder='Order')
-              input.form-control(type='datetime', name='time', placeholder='time, ex)2017-01-01 09:00:00')
+              select.form-control(name='timeData')
+                if params.timeDatas
+                  each timeData in params.timeDatas
+                    option(value={couNum: timeData.couNum, time: timeData.time}) #{timeData.timeString}
             .row.text-center
               button.btn.btn-lg.btn-primary(type='submit') Do Attend!
               
