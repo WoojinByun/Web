@@ -47,7 +47,6 @@ router.use(function(req, res, next){
 
 router.post('/', function(req, res, next) {
   var datas = req.body.timeData;
-  console.log(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]);
   var imgs = getDescriptor(rootDir + '/public/rasp/', shell.ls('public/rasp/attTest.*g').stdout.replace('public/rasp/','').split('\n')[0]);
   var isNoPerson = false;
   if(imgs == undefined){
@@ -62,6 +61,7 @@ router.post('/', function(req, res, next) {
     usrNums.push(imgs[j].usrNum);
   }
   datas.usrNums = usrNums;
+  console.log(datas);
   dbmodule.doAttend(datas);
 
   var userEvt = dbmodule.getUsersInfo(datas.usrNums);
