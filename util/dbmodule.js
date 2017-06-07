@@ -200,6 +200,7 @@ function getAttendTimeAll(usrNum){
     for(var i=0; i<result.length; i++){
       var timeData = {
         couNum:  result[i].cou_num,
+        order:  result[i].order,
         time:  result[i].time,
         timeString:  result[i].time_string
       }

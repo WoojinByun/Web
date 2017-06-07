@@ -1,5 +1,6 @@
 extends layout
 block headExtra
+  link(href='/css/checkAttendDisplay.css', rel='stylesheet')
   link(href='/css/classAttend.css', rel='stylesheet')
 block content
   .container-fluid
@@ -26,8 +27,15 @@ block content
               select.form-control(name='timeData')
                 if params.timeDatas
                   each timeData in params.timeDatas
-                    option(value={couNum: timeData.couNum, time: timeData.time}) #{timeData.timeString}
+                    option(value={couNum: timeData.couNum, order: timeData.order, time: timeData.time}) #{timeData.timeString}
             .row.text-center
               button.btn.btn-lg.btn-primary(type='submit') Do Attend!
+    if params.users
+      each user in params.users
+        .row
+          .userDiv.col-lg-8.col-lg-offset-2
+            img.userPic(src='#{user.imgSrc}')
+            p.id 학번 : #{user.id}
+            p.name 이름 : #{user.name}
               
   script(src='/js/classAttend.js')
