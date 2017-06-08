@@ -30,23 +30,16 @@ html(lang='en')
                     li.message-preview
                       a(href='/attend/#{course.couNum}')
                         .media
-                          span.pull-left
-                            img.media-object(src='http://placehold.it/50x50', alt='')
                           .media-body
                             h5.media-heading
                               strong #{course.couName}
                             p.small.text-muted
                               i.fa.fa-clock-o
                               |  #{course.proName}
-                            p Lorem ipsum dolor sit amet, consectetur...
               li
                 a(href='/schedule')
                   i.fa.fa-envelope
                   |  시간표
-              li
-                a(href='#')
-                  i.fa.fa-envelope
-                  |  출결 변경 신청
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
                   i.fa.fa-envelope
@@ -72,10 +65,6 @@ html(lang='en')
                   |  #{params.user.name}
                   b.caret
                 ul.dropdown-menu
-                  li
-                    a(href='#')
-                      i.fa.fa-fw.fa-user
-                      |  프로필
                   li
                     a(href='/register')
                       i.fa.fa-fw.fa-gear
