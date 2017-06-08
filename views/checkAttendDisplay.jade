@@ -9,23 +9,23 @@ block content
         h1.page-header
           | 출석 체크
           small  Check Attendance
-    // /.row
-    .row
-      .col-lg-offset-2
-      .col-lg-8
-        .form-group
-        form#upload-image-form(action='/checkAttend', method='post', enctype='multipart/form-data')
-          #image-preview-div
-            label(for='exampleInputFile') Selected image:
-            br
-            img#preview-img(src='/img/noimage.jpg')
-          .form-group
-            input#file(type='file', name='uploadFile', required='')
-          button#upload-button.btn.btn-lg.btn-primary(type='submit', disabled='') Upload image
-          .row
-          input.form-control(type='text', name='couNum', placeholder='Course Number')
-          input.form-control(type='text', name='order', placeholder='Order')
-          input.form-control(type='datetime', name='time', placeholder='time, ex)2017-01-01 09:00:00')
+    //- // /.row
+    //- .row
+    //-   .col-lg-offset-2
+    //-   .col-lg-8
+    //-     .form-group
+    //-     form#upload-image-form(action='/checkAttend', method='post', enctype='multipart/form-data')
+    //-       #image-preview-div
+    //-         label(for='exampleInputFile') Selected image:
+    //-         br
+    //-         img#preview-img(src='/img/noimage.jpg')
+    //-       .form-group
+    //-         input#file(type='file', name='uploadFile', required='')
+    //-       button#upload-button.btn.btn-lg.btn-primary(type='submit') Upload image
+    //-       .row
+    //-       input.form-control(type='text', name='couNum', placeholder='Course Number')
+    //-       input.form-control(type='text', name='order', placeholder='Order')
+    //-       input.form-control(type='datetime', name='time', placeholder='time, ex)2017-01-01 09:00:00')
     p.cRate 집중도 : #{params.concentRate} 
     if params.users
       each user in params.users

@@ -25,7 +25,7 @@ block content
                   each timeData in params.timeDatas
                     option(value=timeData.couNum + "/" + timeData.order + "/" + timeData.time) #{timeData.timeString}
             .row.text-center
-              button#upload-button.btn.btn-lg.btn-primary(type='submit', disabled='') Do Attend!
+              button#upload-button.btn.btn-lg.btn-primary(type='submit') Do Attend!
           
         
   script(src='/js/register.js')
