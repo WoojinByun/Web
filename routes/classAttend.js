@@ -27,6 +27,7 @@ router.post('/attend', function(req, res, next) {
       var newLoc = 'public/rasp/';
 
       var newFileName = 'attTest.' + fileExt;
+      shell.rm(rootDir + '/' + newLoc + newFileName);
       console.log(tempPath, newLoc + newFileName);
       fs.copy(tempPath, newLoc + newFileName, function(err) {
         if (err) {
