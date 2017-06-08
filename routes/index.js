@@ -12,12 +12,25 @@ router.use(function(req, res, next){
   errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
 router.get('/', function(req, res, next) {
-  display(req, res);
+  var attendStatEvt = dbmodule.getSchedule(params.user.usrNum);
+  attendStatEvt.on('end', function(error, attendStats){
+    if (error) {
+      console.log(error);
+      res.writeHead(500);
+      res.end();
+    }
+    params.attendStats = attendStats;
+    display(req, res);
+	});
 });
 
 function display(req, res){
   console.log("user : ", params.user);
   console.log("courses : ", params.courses);
+  console.log("params.attendStats : ", params.attendStats);
+  if(!params.attendStats){
+    return;
+  }
   res.render('index', { title: 'Main', params: params});
 }
 module.exports = router;

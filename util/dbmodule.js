@@ -27,6 +27,7 @@ fs.readFile('./query/query.xml','utf8', function(error, data) {
         global.doAttend_query = result.query.doAttend;
         global.getAttendTimeAll_query = result.query.getAttendTimeAll;
         global.getCourseStuAll_query = result.query.getCourseStuAll;
+        global.getAttendStatistic_query = result.query.getAttendStatistic;
       }
     });
   }
@@ -222,9 +223,29 @@ function getCourseStuAll(courseNum){
   db.query(query, function (error, result, field) {
     var stuNums = [];
     for(var i=0; i<result.length; i++){
-        stuNums.push(result[i].usr_num);
+      stuNums.push(result[i].usr_num);
     }
     evt.emit('end', error, stuNums)
+  });
+  return evt;
+}
+function getAttendStatistic(usrNum){
+  var query = util.format( global.getAttendStatistic_query, usrNum);
+  console.log(query);
+  var evt = new EventEmitter();
+  db.query(query, function (error, result, field) {
+    var attendStats = [];
+    for(var i=0; i<result.length; i++){
+      var attendStat = {
+        couNum:  result[i].cou_num,
+        couName:  result[i].cou_name,
+        attCnt:  result[i].att_cnt,
+        latCnt:  result[i].lat_cnt,
+        absCnt:  result[i].abs_cnt
+      }
+      attendStats.push(attendStat);
+    }
+    evt.emit('end', error, attendStats)
   });
   return evt;
 }
@@ -236,3 +257,4 @@ exports.doAttend = doAttend;
 exports.getUsersInfo = getUsersInfo;
 exports.getAttendTimeAll = getAttendTimeAll;
 exports.getCourseStuAll = getCourseStuAll;
+exports.getAttendStatistic = getAttendStatistic;

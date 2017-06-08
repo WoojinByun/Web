@@ -99,4 +99,31 @@
     AND STD.cou_num = COU.cou_num
     AND STD.stu_num = USR.usr_num
   </getCourseStuAll>
+  <getAttendStatistic>
+    SELECT
+        SUBSUM.cou_num,
+        SUBSUM.cou_name,
+        sum(SUBSUM.att_state = 3) att_cnt,
+        sum(SUBSUM.att_state = 2) lat_cnt,
+        sum(SUBSUM.att_state = 1) abs_cnt
+    FROM
+        (SELECT
+            COU.cou_num,
+            COU.cou_name,
+            (sum(ATT.attend_state) > 1000)   (sum(ATT.attend_state) > 100)   (sum(ATT.attend_state) >= 0) att_state
+        FROM
+            attend ATT,
+            course COU
+        WHERE
+            ATT.stu_num = %s
+            AND COU.cou_num = ATT.cou_num
+        GROUP by
+            ATT.cou_num,
+            ATT.stu_num,
+            date(ATT.time),
+            ATT.order) as SUBSUM
+    GROUP BY
+        SUBSUM.cou_num,
+        SUBSUM.cou_name
+  </getAttendStatistic>
 </query>
