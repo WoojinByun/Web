@@ -1,7 +1,6 @@
 
 function noPreview() {
   $('#preview-img').attr('src', 'noimage.jpg');
-  $('upload-button').attr('disabled', '');
 }
 
 function selectImage(e) {
@@ -63,8 +62,6 @@ $(document).ready(function (e) {
 
       return false;
     }
-
-    $('#upload-button').removeAttr("disabled");
 
     var reader = new FileReader();
     reader.onload = selectImage;
