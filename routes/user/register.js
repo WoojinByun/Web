@@ -65,7 +65,7 @@ function display(req, res){
 function getFaceImage(){
   shell.cd(rootDir + '/public');
   var imgSrcs = shell.ls('faceImage/' + params.user.usrNum + '/*.png').stdout.split('\n');
-  imgSrcs = imgSrcs.map(function(e){ if(e != '' && e != undefined) return '/' + e; });
+  imgSrcs = imgSrcs.map(function(e){ if(e && e.length > 0) return '/' + e; });
   return imgSrcs;
 }
 
