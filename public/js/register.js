@@ -40,7 +40,7 @@ $(document).ready(function (e) {
   // });
 
   $('#file').change(function() {
-
+    alert("!");
     $('#message').empty();
 
     var file = this.files[0];
