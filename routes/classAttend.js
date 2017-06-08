@@ -18,6 +18,7 @@ router.post('/attend', function(req, res, next) {
       console.error(err);
     }
   });
+  shell.rm(rootDir + '/' + newLoc + 'att*');
   form.on('end', function(fields, files) {
     for (var i=0; i < this.openedFiles.length; i++) {
       var tempPath = this.openedFiles[i].path;
@@ -27,7 +28,6 @@ router.post('/attend', function(req, res, next) {
       var newLoc = 'public/rasp/';
 
       var newFileName = 'attTest.' + fileExt;
-      shell.rm(rootDir + '/' + newLoc + newFileName);
       console.log(tempPath, newLoc + newFileName);
       fs.copy(tempPath, newLoc + newFileName, function(err) {
         if (err) {
