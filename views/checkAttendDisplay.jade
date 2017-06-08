@@ -29,9 +29,9 @@ block content
     p.cRate 집중도 : #{params.concentRate} 
     if params.users
       each user in params.users
-      .row
-      .userDiv.col-lg-8.col-lg-offset-2
-        img.userPic(src='#{user.imgSrc}')
-        p.id 학번 : #{user.id}
-        p.name 이름 : #{user.name}
+        .row
+          .userDiv.col-lg-8.col-lg-offset-2
+            img.userPic(src='#{user.imgSrc}')
+            p.id 학번 : #{user.id}
+            p.name 이름 : #{user.name}
   script(src='/js/register.js')
