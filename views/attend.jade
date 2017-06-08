@@ -14,12 +14,13 @@ block content
             - var attMax = params.attends.length;
             - var count = 0;
             | #{params.attends[0].couName}
-            small  출석률 #{parseInt(count)}%
+            small.attendRate  출석률 [0%]
           .table-responsive
             table.table.table-hover.table-striped.att
               tr.gray
                 th 회차
                 th 날짜
+                th 차수
                 th 출석여부
               - for (var i=0; i<attMax; i++)
                 - var dd = params.attends[i].date.getDate();
@@ -34,16 +35,20 @@ block content
                     | #{i+1}
                   td
                     | #{mm + '/' + dd}
+                  td
+                    | #{params.attends[i].order}
                   if isAttend
                     - count++;
                     td.success
                       i.fa.fa-fw.fa-check
                   else if isLate
+                    - count+=0.5;
                     td.late
                       i.fa.fa-fw.fa-warning
                   else
                     td.absence
                       i.fa.fa-fw.fa-remove
-          small  출석률 #{parseInt(count/attMax*100)}%
-                        
+      input#attRateCalc(type='hidden', value=parseInt(count/attMax*100))
+        
+  script(src='/js/attend.js')
   // /.container-fluid

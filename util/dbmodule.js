@@ -159,6 +159,7 @@ function getStuAttend(usrNum, couNum){
         couName: result[i].cou_name,
         stuNum: result[i].stu_num,
         date: result[i].date,
+        order: result[i].order,
         attCnt: result[i].att_cnt
       }
       attends.push(attend);

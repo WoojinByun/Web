@@ -9,7 +9,6 @@ var params = {};
 
 router.use(function(req, res, next){
   params = sessioning.getSession(req);
-  console.log('-------------------- params --->>>>>>>>>>>' , params);
   errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
 router.get('/', function(req, res, next) {

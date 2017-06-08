@@ -74,12 +74,12 @@
     AND STU.cou_num = COUT.cou_num
   </getSchedule>
   <getStuAttend>
-    SELECT COU.cou_name, ATT.stu_num, date(ATT.time) date, sum(ATT.attend_state) att_cnt
+    SELECT COU.cou_name, ATT.stu_num, date(ATT.time) date, ATT.order, sum(ATT.attend_state) att_cnt
     FROM attend ATT, course COU
     WHERE ATT.stu_num = %s
     AND ATT.cou_num = %s
     AND COU.cou_num = ATT.cou_num
-    GROUP by ATT.cou_num, ATT.stu_num, date(ATT.time)
+    GROUP by ATT.cou_num, ATT.stu_num, date(ATT.time), ATT.order
   </getStuAttend>
   <getUsersInfo>
     SELECT usr_num, id, name
