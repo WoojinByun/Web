@@ -18,7 +18,7 @@ router.post('/attend', function(req, res, next) {
       console.error(err);
     }
   });
-  shell.rm(rootDir + '/' + newLoc + 'att*');
+  shell.rm(rootDir + '/public/rasp/att*');
   form.on('end', function(fields, files) {
     for (var i=0; i < this.openedFiles.length; i++) {
       var tempPath = this.openedFiles[i].path;
