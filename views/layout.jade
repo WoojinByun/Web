@@ -88,57 +88,42 @@ html(lang='en')
           span.icon-bar
         a.navbar-brand(href='/') I'm Here
       nav#bs-navbar.navbar-inverse.navbar-collapse.collapse(aria-expanded='false', style='height: 1px;')
-        ul.nav.navbar-left.top-nav
-          li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown')
-              i.fa.fa-user
-              |  #{params.user.name}
-              b.caret
-            ul.dropdown-menu.message-dropdown
-              li.navbar-inverse
-                a(href='/register')
-                  i.fa.fa-gear.chkAttMenu
-                    h5.txt-center.chkAttStr  얼굴 등록
-              li.navbar-inverse
-                a(href='/logout')
-                  i.fa.fa-power-off.chkAttMenu
-                    h5.txt-center.chkAttStr  로그아웃
-          li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown')
-              i.fa.fa-envelope
-              |  출석부
-              b.caret
-              br
-            ul.dropdown-menu.message-dropdown
-              each course in params.courses
-                li.message-preview.navbar-inverse
-                  a(href='/attend/#{course.couNum}')
-                    .media
-                      .media-body
-                        h5.media-heading
-                          strong #{course.couName}
-                        p.small.text-muted
-                          i.fa.fa-clock-o
-                          |  #{course.proName}
-          li.dropdown
-            a.dropdown-toggle(href='#', data-toggle='dropdown')
-              i.fa.fa-envelope
-              |  출석체크
-              b.caret
-            ul.dropdown-menu.message-dropdown
-              li.navbar-inverse
-                a(href='/checkAttend')
-                  i.fa.fa-file-photo-o.chkAttMenu
-                    h5.txt-center.chkAttStr 사진
-              li.navbar-inverse
-                a(href='/classAttend')
-                  i.fa.fa-camera.chkAttMenu
-                    h5.txt-center.chkAttStr 웹캠
-          li
+        a
+          i.fa.fa-user
+          |  #{params.user.name}
+          ul
             a(href='/schedule')
               i.fa.fa-envelope
               |  시간표
-          
+            a(href='/register')
+              i.fa.fa-gear
+              |  얼굴 등록
+            a(href='/logout')
+              i.fa.fa-power-off
+              |  로그아웃
+        a
+          i.fa.fa-envelope
+          |  출석체크
+          ul
+            a(href='/checkAttend')
+              i.fa.fa-file-photo-o
+              | 사진
+            a(href='/classAttend')
+              i.fa.fa-camera
+              | 웹캠
+        a
+          i.fa.fa-envelope
+          |  출석부
+          ul
+          each course in params.courses
+            ul.message-preview
+              a(href='/attend/#{course.couNum}')
+                h5.media-heading
+                  strong #{course.couName}
+                p.small.text-muted
+                  i.fa.fa-clock-o
+                  |  #{course.proName}
+        
         // /.navbar-collapse
       #page-wrapper
         block content
