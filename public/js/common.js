@@ -9,8 +9,4 @@ $(function(){
   if($_GET["msg"])
     alert($_GET["msg"]);
 
-  $('.menuButton').click(function(){
-    window.scrollTo(0,0);
-  });
-
 })
