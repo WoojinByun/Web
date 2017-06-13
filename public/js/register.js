@@ -6,7 +6,7 @@ function noPreview() {
 function selectImage(e) {
   $('.upload-file').css("color", "green");
   $('.preview-img').attr('src', e.target.result);
-  $('.preview-img').css('max-width', '550px');
+  $('.preview-img').css('width', '100%');
   console.log(e.target.result);
 }
 
