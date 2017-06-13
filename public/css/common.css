@@ -145,7 +145,7 @@ ul.alert-dropdown {
       margin-right: auto;
     }
 
-    .form-group>input{
+    .input-group input.form-control{
       width: 73%;
     }
 
