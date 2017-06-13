@@ -1,4 +1,13 @@
 extends layout
+block headExtra
+  script(src='/js/index.js')
+  script.
+    $(function(){
+      console.log(parseInt($('#mob-wrapper').css('width'))-30);
+      $('svg').attr('width', parseInt($('#mob-wrapper').css('width'))-30);
+      var attendStats = JSON.parse('!{params.attendStats}');
+      makeDonutChart('', attendStats.datas);
+    })
 block content
   .container-fluid
     // Page Heading
@@ -24,9 +33,5 @@ block content
           | SW 캡스톤 디자인
     // /.row
     .row
-      svg(width="300", height="500")
+      svg(width="700", height="500")
   // /.container-fluid
-  script(src='/js/index.js')
-  script.
-    var attendStats = JSON.parse('!{params.attendStats}');
-    makeDonutChart('', attendStats.datas);
