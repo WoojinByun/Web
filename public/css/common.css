@@ -305,6 +305,9 @@ ul.alert-dropdown {
 .vBottom{
   vertical-align: bottom !important;
 }
+.hidden{
+  display: none !important;
+}
 
 
 table.att th,

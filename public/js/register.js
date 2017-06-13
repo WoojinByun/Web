@@ -40,6 +40,7 @@ $(document).ready(function (e) {
 
   $('#file').change(function() {
     $('#message').empty();
+    alert("!");
 
     var file = this.files[0];
     var match = ["image/jpeg", "image/png", "image/jpg"];

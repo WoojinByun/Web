@@ -12,14 +12,28 @@ router.use(function(req, res, next){
   errCtl(res, next, !params.user, '/login', '로그인 페이지로 이동합니다.');
 });
 router.get('/', function(req, res, next) {
-  var attendStatEvt = dbmodule.getSchedule(params.user.usrNum);
-  attendStatEvt.on('end', function(error, attendStats){
+  var attendStatEvt = dbmodule.getAttendStatistic(params.user.usrNum);
+  attendStatEvt.on('end', function(error, result){
     if (error) {
       console.log(error);
       res.writeHead(500);
       res.end();
     }
-    params.attendStats = attendStats;
+    if(result){
+      var attendStats = {};
+      attendStats.couNums = [];
+      attendStats.datas = [];
+      for(var i=0; i<result.length; i++){
+        attendStats.couNums.push(result[i].couNum)
+        attendStats.datas.push({
+          "couName": result[i].couName,
+          "출석": result[i].attCnt,
+          "지각": result[i].latCnt,
+          "결석": result[i].absCnt
+        });
+      }
+      params.attendStats = JSON.stringify(attendStats);
+    }
     display(req, res);
 	});
 });

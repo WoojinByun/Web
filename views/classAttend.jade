@@ -22,7 +22,8 @@ block content
                   if params.imageUrl
                     img(src=params.imageUrl)
                   else
-                    img(src='/img/noimage.jpg')
+                    img(src='/rasp/attTest.jpg')
+                  img.loading(src='/img/loading.gif')
             .row
               select.form-control(name='timeData')
                 if params.timeDatas
