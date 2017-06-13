@@ -1,4 +1,4 @@
-
+$(".upload-file").filestyle();
 function noPreview() {
   $('#preview-img').attr('src', 'noimage.jpg');
 }
@@ -6,8 +6,7 @@ function noPreview() {
 function selectImage(e) {
   $('.upload-file').css("color", "green");
   $('.preview-img').attr('src', e.target.result);
-  $('.preview-img').css('max-width', '550px');
-  console.log(e.target.result);
+  $('.preview-img').css('width', '100%');
 }
 
 $(document).ready(function (e) {
