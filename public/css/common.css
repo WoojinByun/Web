@@ -141,7 +141,7 @@ ul.alert-dropdown {
 
 @media(max-width:768px) {
   body{
-    margin-top : 60px;
+    margin-top: 60px;
   }
   #wrapper{
     display: none;
@@ -150,22 +150,22 @@ ul.alert-dropdown {
     display: block;
   }
   .chkAttMenu{
-    width : 100%;
-    margin : 0;
+    width: 100%;
+    margin: 0;
     font-size: 20px !important;
-    color : #999999;
+    color: #999999;
   }
   .top-nav>li{
     display: block;
-    float : none;
+    float: none;
   }
 
   .chkAttStr{
-    float : right;
-    margin : 0;
-    margin-right : 30%;
+    float: right;
+    margin: 0;
+    margin-right: 30%;
     font-size: 15px;
-    color : #999999;
+    color: #999999;
   }
   .navbar-toggle{
     float: left;
@@ -180,21 +180,30 @@ ul.alert-dropdown {
     margin-bottom: 0;
   }
   #bs-navbar a{
-    padding-left: 0 !important;
-    padding-top : 0 !important;
+    padding: 4px 15px 4px 10px !important;
     font-size: 18px !important;
     position: relative;
     display: block;
-    padding: 8px 15px 8px 45px;
     color: rgba(255,255,255,0.75);
+    border-radius: 9px;
   }
   #bs-navbar a > i{
-    padding-right : 5%;
+    padding-right: 5%;
+    width: 30px;
+  }
+  #bs-navbar a:hover{
+    text-decoration: none;
+  }
+  #bs-navbar ul a:hover{
+    background-color: #111;
+  }
+  #bs-navbar ul{
+    padding-left: 20px;
   }
   .dropdown{
-    padding : 0;
-    margin : 0;
-    height : 41px;
+    padding: 0;
+    margin: 0;
+    height: 41px;
   }
   .dropdown-menu{
     position :relative !important;
@@ -203,10 +212,11 @@ ul.alert-dropdown {
     color: #999999
   }
   .dropdown-menu > a{
-    padding : 0;
+    padding: 0;
   }
   #bs-navbar{
-    margin-top : 0;
+    margin-top: 0;
+    padding-top: 10px;
   }
 }
 
@@ -332,22 +342,4 @@ td.absence{background-color:#ebcccc;}
 }
 .top-nav>li>a{
   font-size: 18px;
-}
-
-.chkAttMenu{
-  width : 100%;
-  margin : 0;
-  margin-top : 12%;
-  font-size: 25px !important;
-  color : #999999;
-}
-
-.chkAttStr{
-  float : right;
-  margin : 0;
-  margin-top : 3%;
-  margin-bottom : 12%;
-  margin-right : 10%;
-  font-size: 20px;
-  color : #999999;
 }

@@ -81,48 +81,48 @@ html(lang='en')
     // /#wrapper
     #mob-wrapper
       .navbar-header.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
-        button.navbar-toggle.collapsed(aria-controls='bs-navbar', aria-expanded='false', data-target='#bs-navbar', data-toggle='collapse', type='button')
+        button.menuButton.navbar-toggle.collapsed(aria-controls='bs-navbar', aria-expanded='false', data-target='#bs-navbar', data-toggle='collapse', type='button')
           span.sr-only Toggle navigation
           span.icon-bar
           span.icon-bar
           span.icon-bar
         a.navbar-brand(href='/') I'm Here
       nav#bs-navbar.navbar-inverse.navbar-collapse.collapse(aria-expanded='false', style='height: 1px;')
-        a
+        a.test
           i.fa.fa-user
-          |  #{params.user.name}
-          ul
-            a(href='/schedule')
-              i.fa.fa-envelope
-              |  시간표
-            a(href='/register')
-              i.fa.fa-gear
-              |  얼굴 등록
-            a(href='/logout')
-              i.fa.fa-power-off
-              |  로그아웃
+          | #{params.user.name}
+        ul
+          a(href='/schedule')
+            i.fa.fa-envelope
+            | 시간표
+          a(href='/register')
+            i.fa.fa-gear
+            | 얼굴 등록
+          a(href='/logout')
+            i.fa.fa-power-off
+            | 로그아웃
         a
           i.fa.fa-envelope
-          |  출석체크
-          ul
-            a(href='/checkAttend')
-              i.fa.fa-file-photo-o
-              | 사진
-            a(href='/classAttend')
-              i.fa.fa-camera
-              | 웹캠
+          | 출석체크
+        ul
+          a(href='/checkAttend')
+            i.fa.fa-file-photo-o
+            | 사진
+          a(href='/classAttend')
+            i.fa.fa-camera
+            | 웹캠
         a
           i.fa.fa-envelope
-          |  출석부
-          ul
-          each course in params.courses
-            ul.message-preview
-              a(href='/attend/#{course.couNum}')
-                h5.media-heading
-                  strong #{course.couName}
-                p.small.text-muted
-                  i.fa.fa-clock-o
-                  |  #{course.proName}
+          | 출석부
+        ul
+        each course in params.courses
+          ul.message-preview
+            a(href='/attend/#{course.couNum}')
+              h5.media-heading
+                strong #{course.couName}
+              p.small.text-muted
+                i.fa.fa-clock-o
+                |  #{course.proName}
         
         // /.navbar-collapse
       #page-wrapper
