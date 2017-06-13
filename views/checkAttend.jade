@@ -16,9 +16,9 @@ block content
               #image-preview-div
                 label(for='exampleInputFile') Selected image:
                 br
-                img#preview-img(src='/img/noimage.jpg')
+                img.preview-img(src='/img/noimage.jpg')
               .form-group
-                input#file(type='file', name='uploadFile', required='')
+                input.upload-file(type='file', name='uploadFile', required='')
             .row
               select.form-control(name='timeData')
                 if params.timeDatas
