@@ -170,11 +170,14 @@ ul.alert-dropdown {
   .navbar-toggle{
     float: left;
     text-align: center;
-    margin-top :3%;
-    margin-left: 3%;
+    margin-top: 13px;
+    margin-left: 13px;
   }
   .navbar-brand{
-    margin-left:18%;
+    margin: 0 auto;
+    display: block;
+    width: 100px;
+    float: none;
   }
   .navbar-header{
     margin-bottom: 0;

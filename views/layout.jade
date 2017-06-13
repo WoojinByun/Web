@@ -23,7 +23,7 @@ html(lang='en')
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
                   i.fa.fa-envelope
-                  |  출석부
+                  |  내 출석현황
                   b.caret
                 ul.dropdown-menu.message-dropdown
                   each course in params.courses
@@ -38,11 +38,11 @@ html(lang='en')
                               |  #{course.proName}
               li
                 a(href='/schedule')
-                  i.fa.fa-envelope
+                  i.fa.fa-calendar
                   |  시간표
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
-                  i.fa.fa-envelope
+                  i.fa.fa-check
                   |  출석체크
                   b.caret
                 ul.dropdown-menu.message-dropdown
@@ -93,7 +93,7 @@ html(lang='en')
           | #{params.user.name}
         ul
           a(href='/schedule')
-            i.fa.fa-envelope
+            i.fa.fa-calendar
             | 시간표
           a(href='/register')
             i.fa.fa-gear
@@ -102,7 +102,7 @@ html(lang='en')
             i.fa.fa-power-off
             | 로그아웃
         a
-          i.fa.fa-envelope
+          i.fa.fa-check
           | 출석체크
         ul
           a(href='/checkAttend')
@@ -112,17 +112,16 @@ html(lang='en')
             i.fa.fa-camera
             | 웹캠
         a
-          i.fa.fa-envelope
-          | 출석부
+          i.fa.fa-address-card
+          | 내 출석현황
         ul
         each course in params.courses
           ul.message-preview
             a(href='/attend/#{course.couNum}')
-              h5.media-heading
-                strong #{course.couName}
-              p.small.text-muted
-                i.fa.fa-clock-o
-                |  #{course.proName}
+              i.fa.fa-book
+              | #{course.couName}
+              span.small.text-muted
+                |  - #{course.proName}
         
         // /.navbar-collapse
       #page-wrapper
