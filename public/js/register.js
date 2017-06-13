@@ -4,9 +4,10 @@ function noPreview() {
 }
 
 function selectImage(e) {
-  $('#file').css("color", "green");
-  $('#preview-img').attr('src', e.target.result);
-  $('#preview-img').css('max-width', '550px');
+  $('.upload-file').css("color", "green");
+  $('.preview-img').attr('src', e.target.result);
+  $('.preview-img').css('max-width', '550px');
+  console.log(e.target.result);
 }
 
 $(document).ready(function (e) {
@@ -38,9 +39,8 @@ $(document).ready(function (e) {
   //
   // });
 
-  $('#file').change(function() {
+  $(document).on('change','.upload-file',function() {
     $('#message').empty();
-    alert("!");
 
     var file = this.files[0];
     var match = ["image/jpeg", "image/png", "image/jpg"];
@@ -65,7 +65,7 @@ $(document).ready(function (e) {
 
     var reader = new FileReader();
     reader.onload = selectImage;
-    reader.readAsDataURL(this.files[0]);
+    reader.readAsDataURL(file);
 
   });
 
