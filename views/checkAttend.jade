@@ -16,10 +16,10 @@ block content
               #image-preview-div
                 label(for='exampleInputFile') Selected image:
                 br
-                img.preview-img(src='/img/noimage.jpg')
+                img.preview-img(src='/img/noimage.jpg').center-block
               .form-group
-                input.upload-file(type='file', name='uploadFile', required='')
-            .row
+                input.upload-file(type='file', name='uploadFile', required='').center-block
+            .row.center-block.time-list
               select.form-control(name='timeData')
                 if params.timeDatas
                   each timeData in params.timeDatas

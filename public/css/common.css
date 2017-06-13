@@ -137,6 +137,21 @@ ul.alert-dropdown {
         outline: none;
         background-color: #000 !important;
     }
+
+    .form-group>div{
+      width: 50%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .form-group>input{
+      width: 73%;
+    }
+
+    .time-list{
+      width: 52%;
+    }
 }
 
 @media(max-width:768px) {

@@ -1,4 +1,4 @@
-
+$(".upload-file").filestyle();
 function noPreview() {
   $('#preview-img').attr('src', 'noimage.jpg');
 }
