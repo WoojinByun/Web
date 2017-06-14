@@ -61,14 +61,14 @@ router.post('/', function(req, res, next) {
           console.error(err);
         } else {
           console.log(newLoc + newFileName + ' has been saved!');
-          params.concentRate = getHeadTrack(rootDir + '/' + newLoc, newFileName);
+          params.concentRate = getHeadTrack(newLoc, newFileName);
           var stuNumsEvt = dbmodule.getCourseStuAll(datas.couNum);
           stuNumsEvt.on('end', function(error, stuNums){
             if(error) {
               res.writeHead(500);
               res.end();
             }
-            var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName, stuNums.toString().replace(/,/g, ' '));
+            var imgs = getDescriptor(newLoc, newFileName, stuNums.toString().replace(/,/g, ' '));
             var isNoPerson = false;
             if(imgs == undefined){
               imgs = [{imgSrc:'/img/noimage.png', id: '-', name: '검출된 사람이 없습니다.'}];
