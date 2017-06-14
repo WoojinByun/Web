@@ -3,3 +3,4 @@ npm-debug.log
 public/faceImage/
 public/attChk/
 public/rasp/
+node_modules/
