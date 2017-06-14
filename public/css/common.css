@@ -382,3 +382,6 @@ td.absence{background-color:#ebcccc;}
 #upload-image-form .form-group{
   margin-bottom: 10px;
 }
+b.caret{
+  margin-left: 8px;
+}

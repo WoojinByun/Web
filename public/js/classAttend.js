@@ -9,7 +9,8 @@ $('.imgCover').click(function(){
     .addClass('hidden')
     .attr('src', "/rasp/attTest.jpg?" + d.getTime())
     .load(function(){
-      $(this).removeClass('hidden');
+      $(this).removeClass('hidden')
+             .blur();
   })
 
 });
