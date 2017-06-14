@@ -13,12 +13,11 @@ block content
         .form-group
           form#upload-image-form(action='/checkAttend', method='post', enctype='multipart/form-data')
             .row
-              #image-preview-div
-                label(for='exampleInputFile') Selected image:
-                br
-                img.preview-img(src='/img/noimage.jpg').center-block
-              .form-group
-                input.upload-file(type='file', name='uploadFile', required='').center-block
+              .col-lg-12
+                #image-preview-div
+                  img.preview-img(src='/img/noimage.jpg').center-block
+                .form-group
+                  input.upload-file(type='file', name='uploadFile', required='').center-block
             .row.center-block.time-list
               select.form-control(name='timeData')
                 if params.timeDatas

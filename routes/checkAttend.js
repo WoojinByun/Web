@@ -47,12 +47,12 @@ router.post('/', function(req, res, next) {
       var newLoc = 'public/attChk/temp/';
 
       var newFileName = 'attTest.' + fileExt;
-      // console.log(tempPath, newLoc + newFileName);
+      console.log(tempPath, newLoc + newFileName);
       fs.copy(tempPath, newLoc + newFileName, function(err) {
         if (err) {
           console.error(err);
         } else {
-          // console.log(newLoc + newFileName + ' has been saved!');
+          console.log(newLoc + newFileName + ' has been saved!');
           params.concentRate = getHeadTrack(rootDir + '/' + newLoc, newFileName);
           var stuNumsEvt = dbmodule.getCourseStuAll(datas.couNum);
           stuNumsEvt.on('end', function(error, stuNums){

@@ -1,7 +1,7 @@
 
 function makeDonutChart(target, data){
   var svg = d3.selectAll("svg"),
-      margin = {top: 20, right: 60, bottom: 30, left: 40},
+      margin = {top: 20, right: 0, bottom: 30, left: 40},
       width = +svg.attr("width") - margin.left - margin.right,
       height = +svg.attr("height") - margin.top - margin.bottom,
       g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");

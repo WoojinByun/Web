@@ -4,7 +4,7 @@ block headExtra
   script.
     $(function(){
       console.log(parseInt($('#mob-wrapper').css('width'))-30);
-      $('svg').attr('width', parseInt($('#mob-wrapper').css('width'))-30);
+      $('svg').attr('width', parseInt($('#mob-wrapper svg').parent().css('width'))-30);
       var attendStats = JSON.parse('!{params.attendStats}');
       makeDonutChart('', attendStats.datas);
     })
@@ -14,24 +14,11 @@ block content
     .row
       .col-lg-12
         h1.page-header
-          | 출석 정보 확인
-          small Statistics Overview
+          | 출석 통계
+          p
+            small Statistics Overview
     // /.row
     .row
       .col-lg-12
-        h2
-          | 소프트웨어 분석 및 설계
-    // /.row
-    .row
-      .col-lg-12
-        h2
-          | 시스템 프로그래밍
-    // /.row
-    .row
-      .col-lg-12
-        h2
-          | SW 캡스톤 디자인
-    // /.row
-    .row
-      svg(width="700", height="500")
+        svg(width="700", height="500")
   // /.container-fluid

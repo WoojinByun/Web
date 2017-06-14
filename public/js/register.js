@@ -1,4 +1,4 @@
-$(".upload-file").filestyle();
+$(".upload-file").filestyle({icon: false, buttonText: '사진 올리기'});
 function noPreview() {
   $('#preview-img').attr('src', 'noimage.jpg');
 }
