@@ -25,7 +25,7 @@ router.post('/attend', function(req, res, next) {
       var fileName = this.openedFiles[i].name;
       var fileExt = fileName.split(".")[fileName.split(".").length-1].toLowerCase();
       var index = fileName.indexOf('/');
-      var newLoc = rootDir + 'public/rasp/';
+      var newLoc = rootDir + '/public/rasp/';
 
       var newFileName = 'attTest.' + fileExt;
       console.log(tempPath, newLoc + newFileName);
