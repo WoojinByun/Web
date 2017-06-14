@@ -6,21 +6,23 @@ block content
       .col-lg-12
         h1.page-header
           | 얼굴 등록
+          br
           small Face Register
     // /.row
     .row
       .col-lg-8.col-lg-offset-2
         .form-group
           form#upload-image-form(action='/register', method='post', enctype='multipart/form-data')
-            .row
-              #image-preview-div
-                label(for='exampleInputFile') Selected image:
-                br
-                img.preview-img(src='/img/noimage.png').center-block
-              .form-group
-                input.upload-file(type='file', name='uploadFile', required='').center-block
-            .row
-              button#upload-button.btn.btn-lg.btn-primary(type='submit').center-block Upload image
+            .col-lg-12
+              .row
+                #image-preview-div
+                  label(for='exampleInputFile') Selected image:
+                  br
+                  img.preview-img(src='/img/noimage.png').center-block
+                .form-group
+                  input.upload-file(type='file', name='uploadFile', required='').center-block
+              .row
+                button#upload-button.btn.btn-lg.btn-primary(type='submit').center-block Upload image
     .row
       .userDiv.col-lg-8.col-lg-offset-2
         each imgSrc in params.imgSrcs

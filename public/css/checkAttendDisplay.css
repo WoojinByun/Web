@@ -1,10 +1,16 @@
 .userDiv{
   padding-top: 20px;
-  font-size: 31px;
+  font-size: 20px;
+}
+.userDiv table th,
+.userDiv table td{
+  padding: 6px;
+  height: 41px;
+  white-space: pre-wrap !important;
 }
 img.userPic{
   float: left;
-  padding-right: 40px;
+  width: 100%;
 }
 .id{
   display: inline-block;

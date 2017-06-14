@@ -20,27 +20,24 @@ html(lang='en')
               a.navbar-brand(href='/') I'm Here
             // Top Menu Items
             ul.nav.navbar-left.top-nav
-              li.dropdown
+              li#attDetailMenu.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
                   i.fa.fa-address-card
                   |  내 출석 현황
                   b.caret
                 ul.dropdown-menu.message-dropdown
                   each course in params.courses
-                    li.message-preview
+                    li.navbar-inverse
                       a(href='/attend/#{course.couNum}')
-                        .media
-                          .media-body
-                            h5.media-heading
-                              strong #{course.couName}
-                            p.small.text-muted
-                              i.fa.fa-clock-o
-                              |  #{course.proName}
+                        i.fa.fa-book.chkAttMenu
+                          h4.txt-center.chkAttStr #{course.couName}
+                            span.small.text-muted
+                            |  - #{course.proName}
               li
                 a(href='/schedule')
                   i.fa.fa-calendar
                   |  시간표
-              li.dropdown
+              li#attChkMenu.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
                   i.fa.fa-check
                   |  출석체크

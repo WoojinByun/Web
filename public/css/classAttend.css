@@ -25,6 +25,6 @@ img.loading{
     padding-top: 5vw;
   }
 }
-.imgCover:hover img{
+#wrapper .imgCover:hover img{
   opacity: 0.5;
 }
