@@ -44,7 +44,7 @@ router.post('/', function(req, res, next) {
       var fileName = this.openedFiles[i].name;
       var fileExt = fileName.split(".")[fileName.split(".").length-1].toLowerCase();
       var index = fileName.indexOf('/');
-      var newLoc = 'public/attChk/temp/';
+      var newLoc = rootDir + '/public/attChk/temp/';
 
       var newFileName = 'attTest.' + fileExt;
       console.log(tempPath, newLoc + newFileName);
@@ -54,8 +54,6 @@ router.post('/', function(req, res, next) {
           console.error(err);
           return console.error(err);
         }
-
-        console.log("------------ remove success! --------------")
       });
 
       fs.copy(tempPath, newLoc + newFileName, function(err) {

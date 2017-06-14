@@ -29,6 +29,13 @@ router.post('/attend', function(req, res, next) {
 
       var newFileName = 'attTest.' + fileExt;
       console.log(tempPath, newLoc + newFileName);
+      fs.remove(newLoc + newFileName, function(err){
+        if (err) {
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!");
+          console.error(err);
+          return console.error(err);
+        }
+      });
       fs.copy(tempPath, newLoc + newFileName, function(err) {
         if (err) {
           console.error(err);
