@@ -73,7 +73,7 @@ router.post('/', function(req, res, next) {
             var imgs = getDescriptor(rootDir + '/' + newLoc, newFileName, stuNums.toString().replace(/,/g, ' '));
             var isNoPerson = false;
             if(imgs == undefined){
-              imgs = [{imgSrc:'/img/noimage.jpg', id: '-', name: '검출된 사람이 없습니다.'}];
+              imgs = [{imgSrc:'/img/noimage.png', id: '-', name: '검출된 사람이 없습니다.'}];
               isNoPerson = true;
             }
             // console.log(imgs);

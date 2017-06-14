@@ -9,12 +9,22 @@
   background: url('/img/refresh.gif') no-repeat center;
   cursor: pointer;
 }
-.imgCover:hover img{
-  opacity: 0.5;
-}
 img.loading{
   width: 500px;
   margin: 0 auto;
   padding-top: 65px;
   opacity: 1 !important;
+}
+
+@media(max-width:768px) {
+  .imgCover{
+    height: 52.1vw;
+  }
+  img.loading{
+    width: 69vw;
+    padding-top: 5vw;
+  }
+}
+.imgCover:hover img{
+  opacity: 0.5;
 }

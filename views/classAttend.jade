@@ -12,24 +12,23 @@ block content
           small  Check Attendance
     // /.row
     .row
-      .col-lg-8.col-lg-offset-2
+      .col-xs-12.col-lg-8.col-lg-offset-2
         .form-group
           form(action='/classAttend', method='post')
-            .row
+            .wrapper.imageWrapper
               .imgDiv
-                p Latest image:
                 .imgCover
                   if params.imageUrl
                     img(src=params.imageUrl)
                   else
                     img(src='/rasp/attTest.jpg')
                   img.loading(src='/img/loading.gif')
-            .row
+            .wrapper.selectWrapper
               select.form-control(name='timeData')
                 if params.timeDatas
                   each timeData in params.timeDatas
                     option(value=timeData.couNum + "/" + timeData.order + "/" + timeData.time) #{timeData.timeString}
-            .row.text-center
+            .wrapper.submitWrapper.text-center
               button.btn.btn-lg.btn-primary(type='submit') Do Attend!
     if params.users
       each user in params.users
