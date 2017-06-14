@@ -6,6 +6,7 @@
 .userDiv table td{
   padding: 6px;
   height: 41px;
+  white-space: pre-wrap !important;
 }
 img.userPic{
   float: left;

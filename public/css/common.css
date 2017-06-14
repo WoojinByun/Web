@@ -243,7 +243,7 @@ ul.alert-dropdown {
 .chkAttStr{
   float: right;
   margin: 0;
-  margin-right: 30%;
+  margin-right: 15%;
   font-size: 15px;
   color: #999999;
 }
@@ -384,4 +384,18 @@ td.absence{background-color:#ebcccc;}
 }
 b.caret{
   margin-left: 8px;
+}
+#attChkMenu>ul{
+  width: 131px;
+  min-width: 131px;
+
+}
+#wrapper .dropdown-menu>li>a{
+  padding: 10px 12px 3px 20px;
+}
+#attDetailMenu ul{
+  width: 250px;
+}
+#attDetailMenu h4{
+  margin-right: 10px;
 }
