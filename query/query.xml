@@ -110,7 +110,7 @@
         (SELECT
             COU.cou_num,
             COU.cou_name,
-            (sum(ATT.attend_state) > 1000) + (sum(ATT.attend_state) > 100) + (sum(ATT.attend_state) >= 0) att_state
+            (sum(ATT.attend_state) >= 1000) + (sum(ATT.attend_state) >= 100) + (sum(ATT.attend_state) >= 0) att_state
         FROM
             attend ATT,
             course COU
