@@ -12,18 +12,18 @@ block content
       .col-lg-8.col-lg-offset-2
         .form-group
           form#upload-image-form(action='/checkAttend', method='post', enctype='multipart/form-data')
-            .row
+            .wrapper.row
               .col-lg-12
                 #image-preview-div
-                  img.preview-img(src='/img/noimage.jpg').center-block
+                  img.preview-img(src='/img/noimage.png').center-block
                 .form-group
                   input.upload-file(type='file', name='uploadFile', required='').center-block
-            .row.center-block.time-list
+            .wrapper.row.center-block.time-list
               select.form-control(name='timeData')
                 if params.timeDatas
                   each timeData in params.timeDatas
                     option(value=timeData.couNum + "/" + timeData.order + "/" + timeData.time) #{timeData.timeString}
-            .row.text-center
+            .wrapper.row.text-center
               button#upload-button.btn.btn-lg.btn-primary(type='submit') Do Attend!
           
         

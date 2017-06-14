@@ -4,7 +4,9 @@ block headExtra
   script.
     $(function(){
       console.log(parseInt($('#mob-wrapper').css('width'))-30);
-      $('svg').attr('width', parseInt($('#mob-wrapper svg').parent().css('width'))-30);
+      var svgWidth = parseInt($('#mob-wrapper svg').parent().css('width'))-30;
+      if(svgWidth > 300)
+        $('svg').attr('width', svgWidth);
       var attendStats = JSON.parse('!{params.attendStats}');
       makeDonutChart('', attendStats.datas);
     })
@@ -20,5 +22,5 @@ block content
     // /.row
     .row
       .col-lg-12
-        svg(width="700", height="500")
+        svg(width="500", height="500")
   // /.container-fluid

@@ -139,7 +139,7 @@ ul.alert-dropdown {
     }
 
     .form-group>div{
-      width: 50%;
+      width: 100%;
       display: block;
       margin-left: auto;
       margin-right: auto;
@@ -148,6 +148,11 @@ ul.alert-dropdown {
     .input-group input.form-control{
       width: 73%;
     }
+    .input-group span label{
+      width: 100%;
+    }
+
+    width: 100%;
 
     .time-list{
       width: 52%;
@@ -164,24 +169,11 @@ ul.alert-dropdown {
   #mob-wrapper{
     display: block;
   }
-  .chkAttMenu{
-    width: 100%;
-    margin: 0;
-    font-size: 20px !important;
-    color: #999999;
-  }
   .top-nav>li{
     display: block;
     float: none;
   }
 
-  .chkAttStr{
-    float: right;
-    margin: 0;
-    margin-right: 30%;
-    font-size: 15px;
-    color: #999999;
-  }
   .navbar-toggle{
     float: left;
     text-align: center;
@@ -241,6 +233,20 @@ ul.alert-dropdown {
   }
 }
 
+.chkAttMenu{
+  width: 100%;
+  margin: 0;
+  font-size: 20px !important;
+  color: #999999;
+}
+
+.chkAttStr{
+  float: right;
+  margin: 0;
+  margin-right: 30%;
+  font-size: 15px;
+  color: #999999;
+}
 .side-nav>li>ul {
     padding: 0;
 }
@@ -363,4 +369,16 @@ td.absence{background-color:#ebcccc;}
 }
 .top-nav>li>a{
   font-size: 18px;
+}
+#image-preview-div{
+  margin-bottom: 20px;
+}
+#image-preview-div img{
+  width: 100%;
+}
+.wrapper{
+  margin-top: 10px;
+}
+#upload-image-form .form-group{
+  margin-bottom: 10px;
 }

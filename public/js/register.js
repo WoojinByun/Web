@@ -1,12 +1,11 @@
 $(".upload-file").filestyle({icon: false, buttonText: '사진 올리기'});
 function noPreview() {
-  $('#preview-img').attr('src', 'noimage.jpg');
+  $('#preview-img').attr('src', 'noimage.png');
 }
 
 function selectImage(e) {
   $('.upload-file').css("color", "green");
   $('.preview-img').attr('src', e.target.result);
-  $('.preview-img').css('width', '100%');
 }
 
 $(document).ready(function (e) {
