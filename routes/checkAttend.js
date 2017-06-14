@@ -48,6 +48,16 @@ router.post('/', function(req, res, next) {
 
       var newFileName = 'attTest.' + fileExt;
       console.log(tempPath, newLoc + newFileName);
+      fs.remove(newLoc + newFileName, function(err){
+        if (err) {
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!");
+          console.error(err);
+          return console.error(err);
+        }
+
+        console.log("------------ remove success! --------------")
+      });
+
       fs.copy(tempPath, newLoc + newFileName, function(err) {
         if (err) {
           console.error(err);
@@ -129,7 +139,6 @@ function getDescriptor(filePath, fileName, stuNums){
   var beforeImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   shell.cd(rootDir + '/../face_recognition/src/build/');
   shell.exec('./crop ' + userDir + ' ' + filePath + fileName);
-  shell.rm(filePath + fileName);
   shell.cd(userDir);
   var afterImgs = shell.ls(userDir + '*.*g').stdout.split('\n');
   afterImgs = afterImgs.filter(function(e) {
