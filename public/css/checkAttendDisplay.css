@@ -2,8 +2,8 @@
   padding-top: 20px;
   font-size: 20px;
 }
-.userDiv table th
-.userDiv table td,{
+.userDiv table th,
+.userDiv table td{
   padding: 6px;
   height: 41px;
 }
