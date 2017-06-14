@@ -9,21 +9,35 @@ block content
         h1.page-header
           | 출석 체크
           small  Check Attendance
-    p.cRate 집중도 : #{params.concentRate} 
     if params.users
-      each user in params.users
+      if params.users[0].id == '-'
         .row
-          .userDiv.col-xs-6.col-lg-2.col-lg-offset-3
-            img.userPic(src='#{user.imgSrc}')
-          .userDiv.col-xs-6.col-lg-4
+          .userDiv.col-xs-12.col-lg-12
             .table-responsive
               table.table.table-hover.table-striped.att
                 tr
                   th 학번
                 tr
-                  td #{user.id}
+                  td #{params.users[0].id}
                 tr
                   th 이름
                 tr
-                  td #{user.name}
+                  td #{params.users[0].name}
+      else
+        p.cRate 집중도 : #{params.concentRate} 
+        each user in params.users
+          .row
+            .userDiv.col-xs-6.col-lg-2.col-lg-offset-3
+              img.userPic(src='#{user.imgSrc}')
+            .userDiv.col-xs-6.col-lg-4
+              .table-responsive
+                table.table.table-hover.table-striped.att
+                  tr
+                    th 학번
+                  tr
+                    td #{user.id}
+                  tr
+                    th 이름
+                  tr
+                    td #{user.name}
   script(src='/js/register.js')

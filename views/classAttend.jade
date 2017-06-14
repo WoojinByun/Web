@@ -9,6 +9,7 @@ block content
       .col-lg-12
         h1.page-header
           | 출석 체크
+          br
           small  Check Attendance
     // /.row
     .row
@@ -33,9 +34,18 @@ block content
     if params.users
       each user in params.users
         .row
-          .userDiv.col-lg-8.col-lg-offset-2
+          .userDiv.col-xs-6.col-lg-2.col-lg-offset-3
             img.userPic(src='#{user.imgSrc}')
-            p.id 학번 : #{user.id}
-            p.name 이름 : #{user.name}
+          .userDiv.col-xs-6.col-lg-4
+            .table-responsive
+              table.table.table-hover.table-striped.att
+                tr
+                  th 학번
+                tr
+                  td #{user.id}
+                tr
+                  th 이름
+                tr
+                  td #{user.name}
               
   script(src='/js/classAttend.js')
