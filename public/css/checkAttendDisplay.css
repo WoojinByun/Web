@@ -1,6 +1,11 @@
 .userDiv{
   padding-top: 20px;
-  font-size: 31px;
+  font-size: 20px;
+}
+.userDiv table th
+.userDiv table td,{
+  padding: 6px;
+  height: 41px;
 }
 img.userPic{
   float: left;
